@@ -1,117 +1,135 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import useBLE from './src/hooks/useBLE';
+import DeviceModal from './src/components/DeviceConnectionModal';
+import BLEConnectedIcon from './src/assets/img/ble_connected.svg';
+import ProgramsScreenIcon from './src/assets/img/programs_list.svg';
+import SynthScreenIcon from './src/assets/img/synth.svg';
+import KeyboardScreenIcon from './src/assets/img/midi_keyboard.svg'
+import BLEDisconnectedIcon from './src/assets/img/ble_disconnected.svg';
+import SynthScreen from './src/layouts/SynthScreen';
+import ProgramsScreen from './src/layouts/ProgramsScreen';
+import VirtualKeyboardScreen from './src/layouts/VirtualKeyboardScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Tab = createBottomTabNavigator();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+const App = () => {
+  const {
+    requestPermissions,
+    scanForPeripherals,
+    allDevices,
+    connectToDevice,
+    connectedDevice,
+    disconnectFromDevice,
+  } = useBLE();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const scanForDevices = () => {
+    requestPermissions(isGranted => {
+      if (isGranted) {
+        scanForPeripherals();
+      }
+    });
+  };
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const openModal = async () => {
+    scanForDevices();
+    setIsModalVisible(true);
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <SafeAreaView style={styles.container}>
+      <View style={styles.heartRateTitleWrapper}>
+      <TouchableOpacity
+        onPress={connectedDevice ? disconnectFromDevice : openModal}
+        style={styles.ctaButton}>
+        <Text style={styles.ctaButtonText}>
+          {connectedDevice ? 'Disconnect Device' : 'Connect Device'}
+        </Text>
+      </TouchableOpacity>
+      <View style={styles.bleImageContainer}>
+        {connectedDevice ? ( <BLEConnectedIcon width={28} height={28}/> ) : ( <BLEDisconnectedIcon width={28} height={28} /> )}
+      </View>
+      </View>
+      <DeviceModal
+        closeModal={hideModal}
+        visible={isModalVisible}
+        connectToPeripheral={connectToDevice}
+        devices={allDevices}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <NavigationContainer>
+            <Tab.Navigator initialRouteName="Synth" screenOptions={{
+              headerShown: false,
+              tabBarActiveTintColor: '#04303E',
+              tabBarInactiveTintColor: '#ababbb',
+              tabBarLabelStyle: {
+                fontFamily: 'Inconsolata-Medium',
+                paddingBottom: '2%'
+              }
+            }}>
+            <Tab.Screen
+                    name="Synth"
+                    component={SynthScreen}
+                    options={{ tabBarIcon:({ focused }) => (<SynthScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                />
+                <Tab.Screen
+                    name="Programs"
+                    component={ProgramsScreen}
+                    options={{ tabBarIcon:({ focused }) => (<ProgramsScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                />
+                <Tab.Screen
+                    name="Virtual Keyboard"
+                    component={VirtualKeyboardScreen}
+                    options={{ tabBarIcon:({ focused }) => (<KeyboardScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                />
+            </Tab.Navigator>
+        </NavigationContainer>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  heartRateTitleWrapper: {
+    flexDirection: 'row',
+    margin: 0,
+    backgroundColor: '#04303E',
+    paddingBottom: '2%',
+    paddingTop: '2%'
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  bleImageContainer: {
+    justifyContent: "center",
+    alignItems: "flex-end",
+    width: '25%',
+    marginRight: '5%'
   },
-  highlight: {
-    fontWeight: '700',
+  ctaButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '65%',
+    marginLeft: '5%'
+  },
+  ctaButtonText: {
+    color: 'white',
+    fontFamily: 'Inconsolata-Medium',
+    fontSize: 12,
+    textTransform: 'uppercase'
   },
 });
 
