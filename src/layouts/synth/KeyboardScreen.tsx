@@ -10,8 +10,6 @@ const KeyboardScreen = () => {
     <View style={styles.container}>
       <View style={styles.checkboxContainer}>
       <OperatorComponent operatorId={0}/>
-      {/* <CheckBox style={styles.checkbox} disabled={false} value={checked} onValueChange={(newValue) => SetChecked(newValue)} />
-      <Text style={styles.label}>Tremolo</Text>*/}
       </View>
     </View>
   );
@@ -24,13 +22,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     marginBottom: 20,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  label: {
-    margin: 8,
-  },
+  }
 });
 
 export default KeyboardScreen;
