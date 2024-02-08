@@ -44,7 +44,8 @@ const ADSRComponent: FC<ADSRProps> = props => {
 
 const operatorStyle = StyleSheet.create({
   adsrSliderContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '25%'
   },
 
   adsrLabel: {
