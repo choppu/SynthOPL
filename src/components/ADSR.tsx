@@ -10,7 +10,7 @@ type ADSRProps = {
   adsrValueUpdate: (newValue: number) => void
 };
 
-const ADSRComponent: FC<ADSRProps> = props => {
+const ADSR: FC<ADSRProps> = props => {
   const {adsrType, adsrValue, adsrValueUpdate} = props;
   const [sliderValue, setSliderValue] = useState(adsrValue);
 
@@ -27,19 +27,19 @@ const ADSRComponent: FC<ADSRProps> = props => {
   <View style={operatorStyle.adsrSliderContainer}>
       <Text style={operatorStyle.adsrLabel}>{adsrType}</Text>
       <View style={{width: 60, height: 150}}>
-      <Slider
-      style={{width: 150, height: 20, transform:[{rotate: "-90deg"}, { translateX: -65 }, { translateY: -45 }]}}
-      value={sliderValue}
-      minimumValue={0}
-      maximumValue={maxADSRValue}
-      step={1}
-      thumbTintColor={sliderThumbColor}
-      onValueChange={updateADSRValue}
-      minimumTrackTintColor={minimumTrackColor}
-      maximumTrackTintColor="#000000"/>
+        <Slider
+        style={{width: 150, height: 20, transform:[{rotate: "-90deg"}, { translateX: -65 }, { translateY: -45 }]}}
+        value={sliderValue}
+        minimumValue={0}
+        maximumValue={maxADSRValue}
+        step={1}
+        thumbTintColor={sliderThumbColor}
+        onValueChange={updateADSRValue}
+        minimumTrackTintColor={minimumTrackColor}
+        maximumTrackTintColor="#000000"/>
       </View>
       <Text style={operatorStyle.adsrLabel}>{sliderValue}</Text>
-      </View>
+  </View>
 )}
 
 const operatorStyle = StyleSheet.create({
@@ -50,9 +50,9 @@ const operatorStyle = StyleSheet.create({
 
   adsrLabel: {
     fontFamily: 'Inconsolata-Medium',
-    fontSize: 12,
+    fontSize: 11,
     color: mainColor
   }
 });
 
-export default ADSRComponent;
+export default ADSR;

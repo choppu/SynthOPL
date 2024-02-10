@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import ADSRComponent from './ADSRComponent';
+import ADSR from './ADSR';
 
 import SineWave from '../assets/img/wave-sine.svg';
 import SineEvenWave from '../assets/img/wave-sine-even.svg';
@@ -17,6 +17,9 @@ import SineAbsEvenWave from '../assets/img/wave-sine-abs-even.svg';
 import SquareWave from '../assets/img/wave-square.svg';
 import DerivedSquareWave from '../assets/img/wave-derived-square.svg';
 import Slider from '@react-native-community/slider';
+import Selector from './Selector';
+import { onOffParam } from '../types/ComponentTypes';
+import Toggle from './Toggle';
 
 const mainColor = "#04303E";
 const unchekedColor = "#89a9b1";
@@ -25,7 +28,7 @@ type OperatorProps = {
   operatorId: number;
 };
 
-const OperatorComponent: FC<OperatorProps> = props => {
+const Operator: FC<OperatorProps> = props => {
   const [attack, setAttack] = useState(0);
   const [decay, setDecay] = useState(0);
   const [sustain, setSustain] = useState(0);
@@ -51,73 +54,55 @@ const OperatorComponent: FC<OperatorProps> = props => {
     7: ["Derived", <DerivedSquareWave width={40} height={40} />]
   }
 
-  const onOffParams = {
-    "tremolo": false,
-    "vibrato": false,
-    "sustainingVoice": false,
-    "envelopeScale": false
-  };
+  const waveFormsLength = Object.keys(waveForms).length;
+
+  const onOffParams = [
+    {value: false, label: "Tremolo", shortName:"-AM-"},
+    {value: false, label: "Vibrato", shortName:"-VIB-"},
+    {value: false, label: "Sustaining Voice", shortName:"-EG-"},
+    {value: false, label: "Envelope Scale", shortName:"-KSR-"}
+  ];
 
   const [tvseParams, setTVSEParams] = useState(onOffParams);
 
   const {operatorId} = props;
 
-  const updateOnChecked = (paramName: string) => {
-    setTVSEParams((prevState: any) => {
-      return { ...prevState, [paramName]: !prevState[paramName] };
-    })
+  const updateOnToggled = (index: number) => {
+    setTVSEParams(tvseParams.map((tvseParam, i) =>  ({...tvseParam, value: (i === index) ? !tvseParam.value : tvseParam.value})));
   }
 
   useEffect(() => {
-    console.log('Thiis is tremolo: ' + tvseParams.tremolo);
-    console.log('Thiis is vib: ' + tvseParams.vibrato);
-    console.log('Thiis is sus: ' + tvseParams.sustainingVoice);
-    console.log('Thiis is env: ' + tvseParams.envelopeScale);
+    console.log('Thiis is tremolo: ' + tvseParams[0].value);
+    console.log('Thiis is vib: ' + tvseParams[1].value);
+    console.log('Thiis is sus: ' + tvseParams[2].value);
+    console.log('Thiis is env: ' + tvseParams[3].value);
   }, [tvseParams])
 
   return (
     <View style={operatorStyle.container}>
       <View style={{height: 40, flexDirection: 'row'}}>
-        <View style={operatorStyle.checkboxContainer}>
-        <TouchableOpacity style={tvseParams.tremolo ? operatorStyle.checked : operatorStyle.unchecked} activeOpacity={0.8} onPress={() => updateOnChecked("tremolo")}>
-        <Text style={operatorStyle.label}>Tremolo</Text>
-        <Text style={operatorStyle.label}>-AM-</Text>
-        </TouchableOpacity>
-        </View>
-        <View style={operatorStyle.checkboxContainer}>
-        <TouchableOpacity style={tvseParams.vibrato ? operatorStyle.checked : operatorStyle.unchecked} activeOpacity={0.8} onPress={() => updateOnChecked("vibrato")}>
-        <Text style={operatorStyle.label}>Vibrato</Text>
-        <Text style={operatorStyle.label}>-VIB-</Text>
-        </TouchableOpacity>
-        </View>
-        <View style={operatorStyle.checkboxContainer}>
-        <TouchableOpacity style={tvseParams.sustainingVoice ? operatorStyle.checked : operatorStyle.unchecked} activeOpacity={0.8} onPress={() => updateOnChecked("sustainingVoice")}>
-        <Text style={operatorStyle.label}>Sustaining Voice</Text>
-        <Text style={operatorStyle.label}>-EG-</Text>
-        </TouchableOpacity>
-        </View>
-        <View style={operatorStyle.checkboxContainer}>
-        <TouchableOpacity style={tvseParams.envelopeScale ? operatorStyle.checked : operatorStyle.unchecked} activeOpacity={0.8} onPress={() => updateOnChecked("envelopeScale")}>
-        <Text style={operatorStyle.label}>Envelope Scale</Text>
-        <Text style={operatorStyle.label}>-KSR-</Text>
-        </TouchableOpacity>
-        </View>
+        {tvseParams.map((tvseParam: onOffParam, i: number) => {
+          return <Toggle key={i} layout={tvseParams.length} toggled={tvseParam.value} element={i} label={tvseParam.label} labelAbbr={tvseParam.shortName} onChangeFunc={updateOnToggled}></Toggle>
+        })}
       </View>
       <View style={{height: 190, flexDirection: 'row'}}>
-      <ADSRComponent adsrType={'Attack'} adsrValue={attack} adsrValueUpdate={onAttackUpdate}></ADSRComponent>
-      <ADSRComponent adsrType={'Decay'} adsrValue={decay} adsrValueUpdate={onDecaykUpdate}></ADSRComponent>
-      <ADSRComponent adsrType={'Sustain'} adsrValue={sustain} adsrValueUpdate={onSustainUpdate}></ADSRComponent>
-      <ADSRComponent adsrType={'Release'} adsrValue={release} adsrValueUpdate={onReleaseUpdate}></ADSRComponent>
+      <ADSR adsrType={'Attack'} adsrValue={attack} adsrValueUpdate={onAttackUpdate}></ADSR>
+      <ADSR adsrType={'Decay'} adsrValue={decay} adsrValueUpdate={onDecaykUpdate}></ADSR>
+      <ADSR adsrType={'Sustain'} adsrValue={sustain} adsrValueUpdate={onSustainUpdate}></ADSR>
+      <ADSR adsrType={'Release'} adsrValue={release} adsrValueUpdate={onReleaseUpdate}></ADSR>
       </View>
       <View style={{height: 60, flexDirection: 'row'}}>
       {Object.entries(waveForms).map(([key, arr]) => {
            return (
-            <View style={operatorStyle.waveFormContainer}>
-              <TouchableOpacity style={waveForm == Number(key) ? operatorStyle.checked : operatorStyle.unchecked} activeOpacity={0.8} onPress={() => setWaveForm(Number(key))}>
-                {arr[1]}
-                <Text style={operatorStyle.waveLabel}>{arr[0]}</Text>
-              </TouchableOpacity>
-            </View>
+            <Selector
+            key={key}
+            layout={waveFormsLength}
+            optKey={key}
+            optValue={waveForm}
+            label={arr[0] as string}
+            icon={arr[1]}
+            onChangeFunc={setWaveForm}>
+            </Selector>
             );
        })}
       </View>
@@ -169,9 +154,12 @@ const OperatorComponent: FC<OperatorProps> = props => {
 
 const operatorStyle = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    width: '100%',
+    height: 400,
+    borderBottomColor: mainColor,
+    borderBottomWidth: 1
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -239,4 +227,4 @@ const operatorStyle = StyleSheet.create({
   }
 });
 
-export default OperatorComponent;
+export default Operator;
