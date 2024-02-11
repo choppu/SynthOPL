@@ -1,12 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {
-  Text,
   StyleSheet,
-  View,
-  TouchableOpacity,
+  View
 } from 'react-native';
-
-import ADSR from './ADSR';
 
 import SineWave from '../assets/img/wave-sine.svg';
 import SineEvenWave from '../assets/img/wave-sine-even.svg';
@@ -16,13 +12,16 @@ import PulseSineWave from '../assets/img/wave-pulse-sine.svg';
 import SineAbsEvenWave from '../assets/img/wave-sine-abs-even.svg';
 import SquareWave from '../assets/img/wave-square.svg';
 import DerivedSquareWave from '../assets/img/wave-derived-square.svg';
-import Slider from '@react-native-community/slider';
-import Selector from './Selector';
-import { onOffParam } from '../types/ComponentTypes';
-import Toggle from './Toggle';
 
-const mainColor = "#04303E";
-const unchekedColor = "#89a9b1";
+import Selector from './Selector';
+import Toggle from './Toggle';
+import HorizontalSlider from './HorizontalSlider';
+import ADSR from './ADSR';
+
+import { ADSRContainerHeight, defaultFontSize, defaultTextColor, mainColor, mainFont, secondaryColor, tvseContainerHeight, wFormSelectorContainerHeight } from '../utils/StyleConsts';
+import { defaultSliderMinValue, defaultSliderStep, maxFreqMultiplication, maxKeyScaleLevel, maxOutputLevel } from '../utils/AppConsts';
+
+import { onOffParam } from '../types/ComponentTypes';
 
 type OperatorProps = {
   operatorId: number;
@@ -72,26 +71,22 @@ const Operator: FC<OperatorProps> = props => {
   }
 
   useEffect(() => {
-    console.log('Thiis is tremolo: ' + tvseParams[0].value);
-    console.log('Thiis is vib: ' + tvseParams[1].value);
-    console.log('Thiis is sus: ' + tvseParams[2].value);
-    console.log('Thiis is env: ' + tvseParams[3].value);
   }, [tvseParams])
 
   return (
     <View style={operatorStyle.container}>
-      <View style={{height: 40, flexDirection: 'row'}}>
+      <View style={{height: tvseContainerHeight, flexDirection: 'row'}}>
         {tvseParams.map((tvseParam: onOffParam, i: number) => {
           return <Toggle key={i} layout={tvseParams.length} toggled={tvseParam.value} element={i} label={tvseParam.label} labelAbbr={tvseParam.shortName} onChangeFunc={updateOnToggled}></Toggle>
         })}
       </View>
-      <View style={{height: 190, flexDirection: 'row'}}>
-      <ADSR adsrType={'Attack'} adsrValue={attack} adsrValueUpdate={onAttackUpdate}></ADSR>
-      <ADSR adsrType={'Decay'} adsrValue={decay} adsrValueUpdate={onDecaykUpdate}></ADSR>
-      <ADSR adsrType={'Sustain'} adsrValue={sustain} adsrValueUpdate={onSustainUpdate}></ADSR>
-      <ADSR adsrType={'Release'} adsrValue={release} adsrValueUpdate={onReleaseUpdate}></ADSR>
+      <View style={{height: ADSRContainerHeight, flexDirection: 'row'}}>
+      <ADSR adsrLabel={'Attack'} adsrValue={attack} onChangeFunc={onAttackUpdate}></ADSR>
+      <ADSR adsrLabel={'Decay'} adsrValue={decay} onChangeFunc={onDecaykUpdate}></ADSR>
+      <ADSR adsrLabel={'Sustain'} adsrValue={sustain} onChangeFunc={onSustainUpdate}></ADSR>
+      <ADSR adsrLabel={'Release'} adsrValue={release} onChangeFunc={onReleaseUpdate}></ADSR>
       </View>
-      <View style={{height: 60, flexDirection: 'row'}}>
+      <View style={{height: wFormSelectorContainerHeight, flexDirection: 'row'}}>
       {Object.entries(waveForms).map(([key, arr]) => {
            return (
             <Selector
@@ -106,47 +101,10 @@ const Operator: FC<OperatorProps> = props => {
             );
        })}
       </View>
-      <View style={operatorStyle.horizontalSliderContainer}>
-      <Text style={operatorStyle.horizontalSliderLabel}>Level</Text>
-      <Slider
-      style={operatorStyle.horizontalSlider}
-      value={level}
-      minimumValue={0}
-      maximumValue={63}
-      step={1}
-      thumbTintColor={mainColor}
-      onValueChange={setLevel}
-      minimumTrackTintColor={mainColor}
-      maximumTrackTintColor="#000000"/>
-      <Text style={operatorStyle.horizontalSliderValueLabel}>{level}</Text>
-      </View>
-      <View style={operatorStyle.horizontalSliderContainer}>
-      <Text style={operatorStyle.horizontalSliderLabel}>Frequency Multiplication</Text>
-      <Slider
-      style={operatorStyle.horizontalSlider}
-      value={freqMultiplication}
-      minimumValue={0}
-      maximumValue={15}
-      step={1}
-      thumbTintColor={mainColor}
-      onValueChange={setFreqMultiplication}
-      minimumTrackTintColor={mainColor}
-      maximumTrackTintColor="#000000"/>
-      <Text style={operatorStyle.horizontalSliderValueLabel}>{freqMultiplication}</Text>
-      </View>
-      <View style={operatorStyle.horizontalSliderContainer}>
-      <Text style={operatorStyle.horizontalSliderLabel}>Key Scale Level</Text>
-      <Slider
-      style={operatorStyle.horizontalSlider}
-      value={keyScale}
-      minimumValue={0}
-      maximumValue={3}
-      step={1}
-      thumbTintColor={mainColor}
-      onValueChange={setKeyScale}
-      minimumTrackTintColor={mainColor}
-      maximumTrackTintColor="#000000"/>
-      <Text style={operatorStyle.horizontalSliderValueLabel}>{keyScale}</Text>
+      <View>
+        <HorizontalSlider label='Output Level' value={level} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={setLevel}></HorizontalSlider>
+        <HorizontalSlider label='Frequency Multiplication' value={freqMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={setFreqMultiplication}></HorizontalSlider>
+        <HorizontalSlider label='Key Scale Level' value={keyScale} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={setKeyScale}></HorizontalSlider>
       </View>
     </View>
   );
@@ -164,8 +122,7 @@ const operatorStyle = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     width: '25%',
-    marginBottom: 5,
-    borderRightColor: 'white',
+    marginBottom: 5
   },
   waveFormContainer: {
     width: '12.5%'
@@ -177,53 +134,25 @@ const operatorStyle = StyleSheet.create({
     alignItems: 'center',
   },
   unchecked: {
-    backgroundColor: unchekedColor,
+    backgroundColor: secondaryColor,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 9,
-    color: 'white',
+    fontFamily: mainFont,
+    fontSize: defaultFontSize,
+    color: defaultTextColor,
     textTransform: 'uppercase',
     textAlign: 'center'
   },
   waveLabel: {
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 9,
-    color: 'white',
+    fontFamily: mainFont,
+    fontSize: defaultFontSize,
+    color: defaultTextColor,
     textTransform: 'uppercase',
     textAlign: 'center',
     paddingBottom: 5
-  },
-  horizontalSliderContainer: {
-    flexDirection: 'row',
-    height: 30,
-    justifyContent: 'center',
-    padding: 5,
-    marginTop: 5
-  },
-  horizontalSlider: {
-    width: '55%'
-  },
-  horizontalSliderLabel: {
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 9,
-    lineHeight: 20,
-    color: mainColor,
-    textTransform: 'uppercase',
-    width: '35%',
-    textAlign: 'center'
-  },
-  horizontalSliderValueLabel: {
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 9,
-    lineHeight: 20,
-    color: mainColor,
-    textTransform: 'uppercase',
-    width: '10%',
-    textAlign: 'center'
   }
 });
 

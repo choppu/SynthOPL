@@ -9,23 +9,11 @@ import {
 } from 'react-native-ble-plx';
 import {PERMISSIONS, requestMultiple} from 'react-native-permissions';
 import DeviceInfo from 'react-native-device-info';
+import { BluetoothLowEnergyApi, VoidCallback } from '../types/BLETYpes';
 
 const SYTH_OPL_UUID = '78790000-60fe-4153-9038-a770b4d65767';
-const GATT_OPL_CHR_UUID_MSG = '78790001-60fe-4153-9038-a770b4d65767';
-const GATT_OPL_CHR_UUID_LIST_PRG = '78790002-60fe-4153-9038-a770b4d65767';
-const GATT_OPL_CHR_UUID_PROGRAM = '78790003-60fe-4153-9038-a770b4d65767';
+
 const bleManager = new BleManager();
-
-type VoidCallback = (result: boolean) => void;
-
-interface BluetoothLowEnergyApi {
-  requestPermissions(cb: VoidCallback): Promise<void>;
-  scanForPeripherals(): void;
-  connectToDevice: (deviceId: Device) => Promise<void>;
-  disconnectFromDevice: () => void;
-  connectedDevice: Device | null;
-  allDevices: Device[];
-}
 
 function useBLE(): BluetoothLowEnergyApi {
   const [allDevices, setAllDevices] = useState<Device[]>([]);
@@ -97,15 +85,15 @@ function useBLE(): BluetoothLowEnergyApi {
       }
     });
 
-  const connectToDevice = async (device: Device) => {
+  const connectToDevice = async (device: Device, cb: VoidCallback) => {
     try {
       const deviceConnection = await bleManager.connectToDevice(device.id);
       setConnectedDevice(deviceConnection);
       await deviceConnection.discoverAllServicesAndCharacteristics();
       bleManager.stopDeviceScan();
-      startStreamingData(deviceConnection);
+      cb(true);
     } catch (e) {
-      console.log('FAILED TO CONNECT', e);
+      cb(false);
     }
   };
 
@@ -116,16 +104,13 @@ function useBLE(): BluetoothLowEnergyApi {
     }
   };
 
-  const startStreamingData = async (device: Device) => {
-    if (device) {
-      let data = await device.readCharacteristicForService(
-        SYTH_OPL_UUID,
-        GATT_OPL_CHR_UUID_LIST_PRG
-        );
-        console.log(data);
-    } else {
-      console.log('No Device Connected');
-    }
+  const readCharacteristic = async (device: Device, characteristicUUID: string) : Promise<string | null> => {
+    return (await device.readCharacteristicForService(SYTH_OPL_UUID, characteristicUUID)).value;
+  };
+
+  const writeCharacteristic = async (device: Device, characteristicUUID: string, data: string) : Promise<void> => {
+    const resp = await device.writeCharacteristicWithResponseForService(SYTH_OPL_UUID, characteristicUUID, data);
+    console.log(resp);
   };
 
   return {
@@ -134,7 +119,9 @@ function useBLE(): BluetoothLowEnergyApi {
     connectToDevice,
     allDevices,
     connectedDevice,
-    disconnectFromDevice
+    disconnectFromDevice,
+    readCharacteristic,
+    writeCharacteristic
   };
 }
 

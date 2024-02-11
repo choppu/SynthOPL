@@ -1,44 +1,34 @@
 import Slider from "@react-native-community/slider";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
-const mainColor = "#04303E";
+import { mainColor, mainFont, maximumTrackTintColor, minimumTrackColor, verticalSliderContainerHeight, verticalSliderContainerWidth, verticalSliderHeight, verticalSliderOffsetX, verticalSliderOffsetY, verticalSliderRotate, verticalSliderWidth } from "../utils/StyleConsts";
+import { defaultSliderMinValue, defaultSliderStep, maxADSRSliderValue } from "../utils/AppConsts";
 
 type ADSRProps = {
-  adsrType: string;
+  adsrLabel: string;
   adsrValue: number;
-  adsrValueUpdate: (newValue: number) => void
+  onChangeFunc: (newValue: number) => void
 };
 
 const ADSR: FC<ADSRProps> = props => {
-  const {adsrType, adsrValue, adsrValueUpdate} = props;
-  const [sliderValue, setSliderValue] = useState(adsrValue);
-
-  const updateADSRValue = (newValue: number) => {
-    setSliderValue(newValue)
-    adsrValueUpdate(newValue);
-  }
-
-  const maxADSRValue = 15;
-  const minimumTrackColor = "#04303E88";
-  const sliderThumbColor = mainColor;
+  const {adsrLabel, adsrValue, onChangeFunc} = props;
 
   return (
   <View style={operatorStyle.adsrSliderContainer}>
-      <Text style={operatorStyle.adsrLabel}>{adsrType}</Text>
-      <View style={{width: 60, height: 150}}>
+      <Text style={operatorStyle.adsrLabel}>{adsrLabel}</Text>
+      <View style={{width: verticalSliderContainerWidth, height: verticalSliderContainerHeight}}>
         <Slider
-        style={{width: 150, height: 20, transform:[{rotate: "-90deg"}, { translateX: -65 }, { translateY: -45 }]}}
-        value={sliderValue}
-        minimumValue={0}
-        maximumValue={maxADSRValue}
-        step={1}
-        thumbTintColor={sliderThumbColor}
-        onValueChange={updateADSRValue}
+        style={{width: verticalSliderWidth, height: verticalSliderHeight, transform:[{rotate: verticalSliderRotate}, { translateX: verticalSliderOffsetX }, { translateY: verticalSliderOffsetY }]}}
+        value={adsrValue}
+        minimumValue={defaultSliderMinValue}
+        maximumValue={maxADSRSliderValue}
+        step={defaultSliderStep}
+        thumbTintColor={mainColor}
+        onValueChange={(newVal: number) => {onChangeFunc(newVal)}}
         minimumTrackTintColor={minimumTrackColor}
-        maximumTrackTintColor="#000000"/>
+        maximumTrackTintColor={maximumTrackTintColor}/>
       </View>
-      <Text style={operatorStyle.adsrLabel}>{sliderValue}</Text>
+      <Text style={operatorStyle.adsrLabel}>{adsrValue}</Text>
   </View>
 )}
 
@@ -49,7 +39,7 @@ const operatorStyle = StyleSheet.create({
   },
 
   adsrLabel: {
-    fontFamily: 'Inconsolata-Medium',
+    fontFamily: mainFont,
     fontSize: 11,
     color: mainColor
   }

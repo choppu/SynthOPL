@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -19,6 +18,11 @@ import BLEDisconnectedIcon from './src/assets/img/ble_disconnected.svg';
 import SynthScreen from './src/layouts/SynthScreen';
 import ProgramsScreen from './src/layouts/ProgramsScreen';
 import VirtualKeyboardScreen from './src/layouts/VirtualKeyboardScreen';
+import { mainColor, mainFont, tabBarInactiveColor } from './src/utils/StyleConsts';
+import AppStyle from './src/ui/AppStyle';
+import { Device } from 'react-native-ble-plx';
+import synthOPL from './src/hooks/synthOPL';
+import { GATT_OPL_CHR_UUID_PROGRAM } from './src/utils/AppConsts';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,11 +31,19 @@ const App = () => {
     requestPermissions,
     scanForPeripherals,
     allDevices,
-    connectToDevice,
     connectedDevice,
+    connectToDevice,
     disconnectFromDevice,
+    readCharacteristic,
+    writeCharacteristic
   } = useBLE();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const {
+    activeProgram,
+    programList,
+    decodeProgram
+  } = synthOPL();
 
   const scanForDevices = () => {
     requestPermissions(isGranted => {
@@ -50,87 +62,64 @@ const App = () => {
     setIsModalVisible(true);
   };
 
+  const handleDeviceConnection = (device: Device) => {
+    connectToDevice(device, async(isConnected: boolean) => {
+      if(isConnected) {
+        let data = await readCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM);
+        data ? decodeProgram(data) : console.log("No data available");
+      }
+    })
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.heartRateTitleWrapper}>
+    <SafeAreaView style={AppStyle.container}>
+      <View style={AppStyle.topContentContainer}>
       <TouchableOpacity
         onPress={connectedDevice ? disconnectFromDevice : openModal}
-        style={styles.ctaButton}>
-        <Text style={styles.ctaButtonText}>
+        style={AppStyle.connectButton}>
+        <Text style={AppStyle.connectButtonText}>
           {connectedDevice ? 'Disconnect Device' : 'Connect Device'}
         </Text>
       </TouchableOpacity>
-      <View style={styles.bleImageContainer}>
+      <View style={AppStyle.bleImageContainer}>
         {connectedDevice ? ( <BLEConnectedIcon width={28} height={28}/> ) : ( <BLEDisconnectedIcon width={28} height={28} /> )}
       </View>
       </View>
       <DeviceModal
         closeModal={hideModal}
         visible={isModalVisible}
-        connectToPeripheral={connectToDevice}
+        connectToPeripheral={handleDeviceConnection}
         devices={allDevices}
       />
       <NavigationContainer>
             <Tab.Navigator initialRouteName="Synth" screenOptions={{
               headerShown: false,
-              tabBarActiveTintColor: '#04303E',
-              tabBarInactiveTintColor: '#ababbb',
+              tabBarActiveTintColor: mainColor,
+              tabBarInactiveTintColor: tabBarInactiveColor,
               tabBarLabelStyle: {
-                fontFamily: 'Inconsolata-Medium',
+                fontFamily: mainFont,
                 paddingBottom: '2%'
               }
             }}>
             <Tab.Screen
                     name="Synth"
                     component={SynthScreen}
-                    options={{ tabBarIcon:({ focused }) => (<SynthScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                    options={{ tabBarIcon:({ focused }) => (<SynthScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
                 />
                 <Tab.Screen
                     name="Programs"
                     component={ProgramsScreen}
-                    options={{ tabBarIcon:({ focused }) => (<ProgramsScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                    options={{ tabBarIcon:({ focused }) => (<ProgramsScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
                 />
                 <Tab.Screen
                     name="Virtual Keyboard"
                     component={VirtualKeyboardScreen}
-                    options={{ tabBarIcon:({ focused }) => (<KeyboardScreenIcon width={20} height={20} fill={focused ? "#04303E" : "#ababbb"}/>)}}
+                    options={{ tabBarIcon:({ focused }) => (<KeyboardScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
                 />
             </Tab.Navigator>
         </NavigationContainer>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f2f2f2',
-  },
-  heartRateTitleWrapper: {
-    flexDirection: 'row',
-    margin: 0,
-    backgroundColor: '#04303E',
-    paddingBottom: '2%',
-    paddingTop: '2%'
-  },
-  bleImageContainer: {
-    justifyContent: "center",
-    alignItems: "flex-end",
-    width: '25%',
-    marginRight: '5%'
-  },
-  ctaButton: {
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    width: '65%',
-    marginLeft: '5%'
-  },
-  ctaButtonText: {
-    color: 'white',
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 12,
-    textTransform: 'uppercase'
-  },
-});
 
 export default App;

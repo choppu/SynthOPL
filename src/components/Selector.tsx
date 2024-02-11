@@ -1,5 +1,6 @@
 import {FC } from "react";
 import { DimensionValue, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { defaultFontSize, defaultTextColor, mainColor, mainFont, secondaryColor, touchableOpacityActive } from "../utils/StyleConsts";
 
 type SelectorProps = {
   layout: number;
@@ -10,21 +11,18 @@ type SelectorProps = {
   onChangeFunc: (newValue: number) => void
 };
 
-const mainColor = "#04303E";
-const unchekedColor = "#89a9b1";
-
 const Selector: FC<SelectorProps> = props => {
   const {layout, optKey, optValue, label, icon, onChangeFunc} = props;
   const containerWidth = (100 / layout).toString() + '%';
 
   return (
     <View style={{width: containerWidth as DimensionValue }}>
-      <TouchableOpacity style={optValue == Number(optKey) ? selectorStyle.selected : selectorStyle.unselected} key={optKey} activeOpacity={0.8} onPress={() => onChangeFunc(Number(optKey))}>
+      <TouchableOpacity style={optValue == Number(optKey) ? selectorStyle.selected : selectorStyle.unselected} key={optKey} activeOpacity={touchableOpacityActive} onPress={() => onChangeFunc(Number(optKey))}>
         {icon}
         <Text style={selectorStyle.label}>{label}</Text>
       </TouchableOpacity>
     </View>
-  )}
+  )};
 
 const selectorStyle = StyleSheet.create({
   selected: {
@@ -34,15 +32,15 @@ const selectorStyle = StyleSheet.create({
     alignItems: 'center',
   },
   unselected: {
-    backgroundColor: unchekedColor,
+    backgroundColor: secondaryColor,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   label: {
-    fontFamily: 'Inconsolata-Medium',
-    fontSize: 9,
-    color: 'white',
+    fontFamily: mainFont,
+    fontSize: defaultFontSize,
+    color: defaultTextColor,
     textTransform: 'uppercase',
     textAlign: 'center',
     paddingBottom: 5
