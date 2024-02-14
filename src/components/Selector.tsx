@@ -16,7 +16,7 @@ const Selector: FC<SelectorProps> = props => {
   const containerWidth = (100 / layout).toString() + '%';
 
   return (
-    <View style={{width: containerWidth as DimensionValue }}>
+    <View style={{width: containerWidth as DimensionValue}}>
       <TouchableOpacity style={optValue == Number(optKey) ? selectorStyle.selected : selectorStyle.unselected} key={optKey} activeOpacity={touchableOpacityActive} onPress={() => onChangeFunc(Number(optKey))}>
         {icon}
         <Text style={selectorStyle.label}>{label}</Text>
@@ -30,12 +30,16 @@ const selectorStyle = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 10,
+    paddingTop: 10
   },
   unselected: {
     backgroundColor: secondaryColor,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 10,
+    paddingTop: 10
   },
   label: {
     fontFamily: mainFont,
@@ -43,7 +47,6 @@ const selectorStyle = StyleSheet.create({
     color: defaultTextColor,
     textTransform: 'uppercase',
     textAlign: 'center',
-    paddingBottom: 5
   },
 });
 

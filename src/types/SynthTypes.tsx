@@ -19,8 +19,7 @@ export interface Keyboard {
   deepTremolo: boolean;
   deepVibrato: boolean;
   feedback: number;
-  synthType2Ops: number;
-  synthType4Ops: number;
+  synthType: number [];
   chLeft: boolean;
   chRight: boolean;
   enable4Operators: boolean;

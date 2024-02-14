@@ -28,8 +28,8 @@ export namespace SynthOPL {
     keyboard.enable4Operators = !Boolean(keyboardBytes[0]);
     keyboard.deepTremolo = ((keyboardBytes[1] & DEEP_TREMOLO) == DEEP_TREMOLO);
     keyboard.deepVibrato = ((keyboardBytes[1] & DEEP_VIBRATO) == DEEP_VIBRATO);
-    keyboard.synthType2Ops = Number(keyboardBytes[2] & SYNTH_TYPE_2OPS);
-    keyboard.synthType4Ops = Number((keyboardBytes[2] & SYNTH_TYPE_4OPS) >> 7);
+    keyboard.synthType[0] = Number(keyboardBytes[2] & SYNTH_TYPE_2OPS);
+    keyboard.synthType[1] = Number((keyboardBytes[2] & SYNTH_TYPE_4OPS) >> 7);
     keyboard.chRight = ((keyboardBytes[2] & CH_RIGHT) == CH_RIGHT);
     keyboard.chLeft = ((keyboardBytes[2] & CH_LEFT) == CH_LEFT);
     keyboard.feedback = ((keyboardBytes[2] & FEEDBACK) >> 1);
@@ -54,7 +54,7 @@ export namespace SynthOPL {
   export function newProgram() : Program {
     return {
       descriptor: {} as ProgramDescriptor,
-      keyboard: {id: 6, operators: [{}, {}, {}, {}]} as Keyboard,
+      keyboard: {id: 6, synthType: [] as number[], operators: [{}, {}, {}, {}]} as Keyboard,
       drums: [
         {id: 0, operators: [{}, {}]} as Drum,
         {id: 1, operators: [{}, {}]} as Drum,
