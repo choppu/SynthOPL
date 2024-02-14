@@ -32,19 +32,11 @@ type OperatorProps = {
 
 const OperatorComponent: FC<OperatorProps> = props => {
   const {operatorId, operator} = props;
-  const [attack, setAttack] = useState(operator.attack);
-  const [decay, setDecay] = useState(operator.decay);
-  const [sustain, setSustain] = useState(operator.sustain);
-  const [release, setRelease] = useState(operator.release);
-  const [waveForm, setWaveForm] = useState(operator.waveForm);
-  const [level, setLevel] = useState(operator.outputLevel);
-  const [freqMultiplication, setFreqMultiplication] = useState(operator.frequencyMultiplication);
-  const [keyScale, setKeyScale] = useState(operator.keyScaleLevel);
 
-  const onAttackUpdate = (newValue: number) => setAttack(newValue);
-  const onDecaykUpdate = (newValue: number) => setDecay(newValue);
-  const onSustainUpdate = (newValue: number) => setSustain(newValue);
-  const onReleaseUpdate = (newValue: number) => setRelease(newValue);
+  const onAttackUpdate = (newValue: number) => {};
+  const onDecaykUpdate = (newValue: number) => {};
+  const onSustainUpdate = (newValue: number) => {};
+  const onReleaseUpdate = (newValue: number) => {};
 
   const waveForms = {
     0: ["Sine", <SineWave width={40} height={40} />],
@@ -60,33 +52,30 @@ const OperatorComponent: FC<OperatorProps> = props => {
   const waveFormsLength = Object.keys(waveForms).length;
 
   const onOffParams = [
-    {value: false, label: "Tremolo", shortName:"-AM-"},
-    {value: false, label: "Vibrato", shortName:"-VIB-"},
-    {value: false, label: "Sustaining Voice", shortName:"-EG-"},
-    {value: false, label: "Envelope Scale", shortName:"-KSR-"}
+    {value: operator.tremolo, label: "Tremolo", shortName:"-AM-"},
+    {value: operator.vibrato, label: "Vibrato", shortName:"-VIB-"},
+    {value: operator.sustainingVoice, label: "Sustaining Voice", shortName:"-EG-"},
+    {value: operator.envelopeScale, label: "Envelope Scale", shortName:"-KSR-"}
   ];
 
-  const [tvseParams, setTVSEParams] = useState(onOffParams);
+  const updateOperatorValue = (...params: any) => {
 
-  const updateOnToggled = (index: number) => {
-    setTVSEParams(tvseParams.map((tvseParam, i) =>  ({...tvseParam, value: (i === index) ? !tvseParam.value : tvseParam.value})));
   }
 
-  useEffect(() => {
-  }, [tvseParams])
+  const updateOnToggled = (index: number) => {}
 
   return (
     <View style={operatorStyle.container}>
       <View style={{height: tvseContainerHeight, flexDirection: 'row'}}>
-        {tvseParams.map((tvseParam: onOffParam, i: number) => {
-          return <Toggle key={i} layout={tvseParams.length} toggled={tvseParam.value} element={i} label={tvseParam.label} labelAbbr={tvseParam.shortName} onChangeFunc={updateOnToggled}></Toggle>
+        {onOffParams.map((param: onOffParam, i: number) => {
+          return <Toggle key={i} layout={onOffParams.length} toggled={param.value} element={i} label={param.label} labelAbbr={param.shortName} onChangeFunc={updateOnToggled}></Toggle>
         })}
       </View>
       <View style={{height: ADSRContainerHeight, flexDirection: 'row'}}>
-      <ADSR adsrLabel={'Attack'} adsrValue={attack} onChangeFunc={onAttackUpdate}></ADSR>
-      <ADSR adsrLabel={'Decay'} adsrValue={decay} onChangeFunc={onDecaykUpdate}></ADSR>
-      <ADSR adsrLabel={'Sustain'} adsrValue={sustain} onChangeFunc={onSustainUpdate}></ADSR>
-      <ADSR adsrLabel={'Release'} adsrValue={release} onChangeFunc={onReleaseUpdate}></ADSR>
+      <ADSR adsrLabel={'Attack'} adsrValue={operator.attack} onChangeFunc={onAttackUpdate}></ADSR>
+      <ADSR adsrLabel={'Decay'} adsrValue={operator.decay} onChangeFunc={onDecaykUpdate}></ADSR>
+      <ADSR adsrLabel={'Sustain'} adsrValue={operator.sustain} onChangeFunc={onSustainUpdate}></ADSR>
+      <ADSR adsrLabel={'Release'} adsrValue={operator.release} onChangeFunc={onReleaseUpdate}></ADSR>
       </View>
       <View style={{height: wFormSelectorContainerHeight, flexDirection: 'row'}}>
       {Object.entries(waveForms).map(([key, arr]) => {
@@ -95,18 +84,18 @@ const OperatorComponent: FC<OperatorProps> = props => {
             key={key}
             layout={waveFormsLength}
             optKey={key}
-            optValue={waveForm}
+            optValue={operator.waveForm}
             label={arr[0] as string}
             icon={arr[1]}
-            onChangeFunc={setWaveForm}>
+            onChangeFunc={updateOperatorValue}>
             </Selector>
             );
        })}
       </View>
       <View>
-        <HorizontalSlider label='Output Level' value={level} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={setLevel}></HorizontalSlider>
-        <HorizontalSlider label='Frequency Multiplication' value={freqMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={setFreqMultiplication}></HorizontalSlider>
-        <HorizontalSlider label='Key Scale Level' value={keyScale} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={setKeyScale}></HorizontalSlider>
+        <HorizontalSlider label='Output Level' value={operator.outputLevel} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
+        <HorizontalSlider label='Frequency Multiplication' value={operator.frequencyMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
+        <HorizontalSlider label='Key Scale Level' value={operator.keyScaleLevel} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
       </View>
     </View>
   );

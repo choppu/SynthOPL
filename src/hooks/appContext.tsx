@@ -1,5 +1,5 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from 'react';
-import { Drum, Keyboard, Program, ProgramDescriptor } from '../types/SynthTypes';
+import { Program } from '../types/SynthTypes';
 import { Device } from 'react-native-ble-plx';
 import SynthOPL from '../utils/Synth';
 

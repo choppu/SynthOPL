@@ -13,7 +13,7 @@ export namespace SynthOPL {
     operator.frequencyMultiplication = (operatorBytes[0] & OP_FREQ_MULTIPLICATION);
 
     operator.keyScaleLevel = ((operatorBytes[1] & OP_KEY_SCALE) >> 6);
-    operator.outputLevel = (operatorBytes[1] & OP_OUTPUT_LEVEL);
+    operator.outputLevel = 63 - (operatorBytes[1] & OP_OUTPUT_LEVEL);
 
     operator.attack = ((operatorBytes[2] & OP_ATTACK) >> 4);
     operator.decay = (operatorBytes[2] & OP_DECAY);
