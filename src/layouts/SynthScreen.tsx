@@ -2,12 +2,8 @@ import React, {FC, useCallback} from 'react';
 import { View, Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import KeyboardScreen from './synth/KeyboardScreen';
-import CymbalScreen from './synth/CymbalScreen';
-import ExtraScreen from './synth/ExtraScreen';
-import HiHatScreen from './synth/HiHatScreen';
-import KickScreen from './synth/KickScreen';
-import SnareScreen from './synth/SnareScreen';
-import TomScreen from './synth/TomScreen';
+import DrumScreen from './synth/DrumScreen';
+import { DRUMS } from '../utils/AppConsts';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -34,12 +30,11 @@ const SynthScreen = () => {
         }
       }}>
       <Tab.Screen name="Keyboard" component={KeyboardScreen} />
-      <Tab.Screen name="Kick" component={KickScreen} />
-      <Tab.Screen name="Snare" component={SnareScreen} />
-      <Tab.Screen name="Tom" component={TomScreen} />
-      <Tab.Screen name="Cymbal" component={CymbalScreen} />
-      <Tab.Screen name="Hi-Hat" component={HiHatScreen} />
-      <Tab.Screen name="Extra" component={ExtraScreen} />
+      {Object.entries(DRUMS).map(([key, val]) => {
+           return (
+            <Tab.Screen key={val} name={key} initialParams={{id: val}} component={DrumScreen} />
+            );
+       })}
     </Tab.Navigator>
     </View>
   );

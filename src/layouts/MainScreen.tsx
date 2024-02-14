@@ -24,7 +24,6 @@ import ProgramsScreen from './ProgramsScreen';
 import VirtualKeyboardScreen from './VirtualKeyboardScreen';
 import BLE from '../utils/BLE';
 import SynthOPL from '../utils/Synth';
-import { Program } from '../types/SynthTypes';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,18 +55,21 @@ const MainScreen = () => {
 
   const disconnectDevice = async () => {
     BLE.disconnectFromDevice(appState.connectedDevice, () => {});
-    dispatch({type: "connect", payload: null})
+    dispatch({type: "connect", payload: null});
   }
 
   const setConnectedDevice = (device: Device) => {
-    dispatch({type: "connect", payload: device})
+    dispatch({type: "connect", payload: device});
   }
 
   const handleDeviceConnection = (device: Device) => {
     BLE.connectToDevice(device, async(isConnected: boolean) => {
       if(isConnected) {
         let data = await BLE.readCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM);
-        data ? SynthOPL.decodeProgram(data, appState.activeProgram) : console.log("No data available");
+        if(data) {
+          let program = SynthOPL.decodeProgram(data);
+          dispatch({type: "setProgram", payload: program});
+        }
       }
     }, setConnectedDevice)
   }

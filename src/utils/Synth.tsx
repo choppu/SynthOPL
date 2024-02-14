@@ -1,4 +1,4 @@
-import { Drum, Keyboard, Operator, Program } from "../types/SynthTypes";
+import { Drum, Keyboard, Operator, Program, ProgramDescriptor } from "../types/SynthTypes";
 import { CH_LEFT, CH_RIGHT, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
 
 const base64js = require('base64-js');
@@ -34,7 +34,7 @@ export namespace SynthOPL {
     keyboard.chLeft = ((keyboardBytes[2] & CH_LEFT) == CH_LEFT);
     keyboard.feedback = ((keyboardBytes[2] & FEEDBACK) >> 1);
 
-    for(var i = 0, y = 3; i < 4; i++, y + 5) {
+    for(var i = 0, y = 3; i < 4; i++, y += 5) {
       decodeOperator(keyboardBytes.subarray(y, y + 5), keyboard.operators[i]);
     }
   }
@@ -46,13 +46,29 @@ export namespace SynthOPL {
     drum.chLeft = ((drumBytes[0] & CH_LEFT) == CH_LEFT);
     drum.feedback = ((drumBytes[0] & FEEDBACK) >> 1);
 
-    for(var i = 0, y = 1; i < 2; i++, y + 5) {
+    for(var i = 0, y = 1; i < 2; i++, y += 5) {
       decodeOperator(drumBytes.subarray(y, y + 5), drum.operators[i]);
     }
   }
 
-  export function decodeProgram(message: string, program: Program) : void {
+  export function newProgram() : Program {
+    return {
+      descriptor: {} as ProgramDescriptor,
+      keyboard: {id: 6, operators: [{}, {}, {}, {}]} as Keyboard,
+      drums: [
+        {id: 0, operators: [{}, {}]} as Drum,
+        {id: 1, operators: [{}, {}]} as Drum,
+        {id: 2, operators: [{}, {}]} as Drum,
+        {id: 3, operators: [{}, {}]} as Drum,
+        {id: 4, operators: [{}, {}]} as Drum,
+        {id: 5, operators: [{}, {}]} as Drum,
+      ]
+    }
+  }
+
+  export function decodeProgram(message: string) : Program {
     const messageBytes = base64js.toByteArray(message);
+    let program = newProgram();
 
     program.descriptor.bank = messageBytes[0];
     program.descriptor.num = messageBytes[1];
@@ -62,12 +78,11 @@ export namespace SynthOPL {
 
     let notes = messageBytes.subarray(messageBytes - 6);
 
-    decodeDrum(messageBytes.subarray(38, 49), program.kick, notes[0]);
-    decodeDrum(messageBytes.subarray(49, 60), program.snare, notes[1]);
-    decodeDrum(messageBytes.subarray(60, 71), program.tom, notes[2]);
-    decodeDrum(messageBytes.subarray(71, 82), program.cymbal, notes[3]);
-    decodeDrum(messageBytes.subarray(82, 93), program.hiHat, notes[4]);
-    decodeDrum(messageBytes.subarray(93, 104), program.extra, notes[5]);
+    for (let i = 0, y = 38; i < program.drums.length; i++, y += 11) {
+      decodeDrum(messageBytes.subarray(y, y + 11), program.drums[i], notes[i]);
+    }
+
+    return program;
   }
 }
 

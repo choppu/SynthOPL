@@ -37,3 +37,12 @@ export const OP_SUSTAIN = 0xF0;
 export const OP_DECAY = 0x0F;
 export const OP_RELEASE = 0x0F;
 export const OP_WAVEFORM = 0x07;
+
+export const DRUMS = {
+  "Kick": 0,
+  "Snare": 1,
+  "Tom": 2,
+  "Cymbal": 3,
+  "Hi-Hat": 4,
+  "Extra": 5
+}

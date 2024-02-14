@@ -2,16 +2,15 @@ import { View, Text, ScrollView } from 'react-native';
 import OperatorComponent from '../../components/OperatorComponent';
 import AppStyle from '../../ui/AppStyle';
 import HorizontalSlider from '../../components/HorizontalSlider';
-import { FC, useState } from 'react';
 import { defaultSliderMinValue, defaultSliderStep, maxNoteValue } from '../../utils/AppConsts';
-import { Drum, Operator, Synth } from '../../types/SynthTypes';
+import { Operator } from '../../types/SynthTypes';
+import { useAppState } from '../../hooks/appContext';
 
-type DrumProps = {
-  drum: Drum;
-}
+const DrumScreen = ({ route }: any) =>  {
+  const id = route.params.id as number;
+  const {appState, dispatch} = useAppState();
 
-const DrumScreen: FC<DrumProps> = props =>  {
-  const {drum} = props;
+  const drum = appState.activeProgram.drums[id];
 
   const updateNote = (newNote: number) => {
 
@@ -23,13 +22,13 @@ const DrumScreen: FC<DrumProps> = props =>  {
       <View style={AppStyle.operatorsContainer}>
       {drum.operators.map((operator: Operator, i: number) => {
         return (
-          <View>
-            <Text style={AppStyle.operatorLabel}>-OP {i + 1} </Text>
+          <View key={i}>
+            <Text style={AppStyle.operatorLabel}>-OP- {i + 1} </Text>
             <OperatorComponent operatorId={i} operator={operator}/>
           </View>
         );
       })}
-      </View>
+     </View>
     </ScrollView>
   );
 }

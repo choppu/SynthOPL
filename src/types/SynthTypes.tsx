@@ -40,12 +40,7 @@ export interface Drum {
 export interface Program {
   descriptor: ProgramDescriptor;
   keyboard: Keyboard;
-  kick: Drum;
-  snare: Drum;
-  tom: Drum;
-  cymbal: Drum;
-  hiHat: Drum;
-  extra: Drum;
+  drums: Drum [];
 }
 
 export interface ProgramDescriptor {

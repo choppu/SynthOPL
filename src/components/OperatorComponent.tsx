@@ -31,14 +31,15 @@ type OperatorProps = {
 };
 
 const OperatorComponent: FC<OperatorProps> = props => {
-  const [attack, setAttack] = useState(0);
-  const [decay, setDecay] = useState(0);
-  const [sustain, setSustain] = useState(0);
-  const [release, setRelease] = useState(0);
-  const [waveForm, setWaveForm] = useState(0);
-  const [level, setLevel] = useState(0);
-  const [freqMultiplication, setFreqMultiplication] = useState(0);
-  const [keyScale, setKeyScale] = useState(0);
+  const {operatorId, operator} = props;
+  const [attack, setAttack] = useState(operator.attack);
+  const [decay, setDecay] = useState(operator.decay);
+  const [sustain, setSustain] = useState(operator.sustain);
+  const [release, setRelease] = useState(operator.release);
+  const [waveForm, setWaveForm] = useState(operator.waveForm);
+  const [level, setLevel] = useState(operator.outputLevel);
+  const [freqMultiplication, setFreqMultiplication] = useState(operator.frequencyMultiplication);
+  const [keyScale, setKeyScale] = useState(operator.keyScaleLevel);
 
   const onAttackUpdate = (newValue: number) => setAttack(newValue);
   const onDecaykUpdate = (newValue: number) => setDecay(newValue);
@@ -66,8 +67,6 @@ const OperatorComponent: FC<OperatorProps> = props => {
   ];
 
   const [tvseParams, setTVSEParams] = useState(onOffParams);
-
-  const {operatorId} = props;
 
   const updateOnToggled = (index: number) => {
     setTVSEParams(tvseParams.map((tvseParam, i) =>  ({...tvseParam, value: (i === index) ? !tvseParam.value : tvseParam.value})));
