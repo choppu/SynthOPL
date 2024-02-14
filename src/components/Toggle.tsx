@@ -21,7 +21,7 @@ const Toggle: FC<ToggleProps> = props => {
 
   return (
     <View style={{flexDirection: 'row', width: elementWidth as DimensionValue, marginBottom: 5}}>
-      <TouchableOpacity key={element} style={toggled ? toggleStyle.on : toggleStyle.off} activeOpacity={touchableOpacityActive} onPress={() => onChangeFunc(element)}>
+      <TouchableOpacity key={element} style={toggled ? toggleStyle.on : toggleStyle.off} activeOpacity={touchableOpacityActive} onPress={() => onChangeFunc(!toggled)}>
         <Text style={toggleStyle.label}>
           {handleLabel()}
         </Text>

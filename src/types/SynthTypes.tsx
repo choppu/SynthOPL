@@ -1,5 +1,4 @@
 export interface Operator {
-  id: number;
   tremolo: boolean;
   vibrato: boolean;
   sustainingVoice: boolean;
@@ -19,7 +18,8 @@ export interface Keyboard {
   deepTremolo: boolean;
   deepVibrato: boolean;
   feedback: number;
-  synthType: number [];
+  synthType: number;
+  synthType4Ops: number;
   chLeft: boolean;
   chRight: boolean;
   enable4Operators: boolean;
@@ -46,6 +46,17 @@ export interface ProgramDescriptor {
   name: string;
   bank: number;
   num: number;
+}
+
+export interface OperatorPatch {
+  instrumentId: number;
+  operatorId: number;
+  updatedValue: object;
+}
+
+export interface OptionPatch {
+  instrumentId: number;
+  updatedValue: object;
 }
 
 export interface Synth {

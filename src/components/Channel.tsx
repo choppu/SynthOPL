@@ -8,20 +8,22 @@ type ChannelProps = {
   chFeedback: number;
   right: boolean;
   left: boolean;
-  cbFunc: (newVal: any) => void;
+  onChannelRChangeFunc: (newVal: boolean) => void;
+  onChannelLChangeFunc: (newVal: boolean) => void;
+  onFeedbackChangeFunc: (newVal: number) => void;
 };
 
 const Channel: FC<ChannelProps> = props => {
-  const {chFeedback, right, left, cbFunc} = props;
+  const {chFeedback, right, left, onChannelRChangeFunc, onChannelLChangeFunc, onFeedbackChangeFunc} = props;
 
   return (
     <View>
       <View style={{height: 40}}>
-        <HorizontalSlider label='Feedback' value={chFeedback} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newVal: number) => cbFunc(newVal)}></HorizontalSlider>
+        <HorizontalSlider label='Feedback' value={chFeedback} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newVal: number) => onFeedbackChangeFunc(newVal)}></HorizontalSlider>
       </View>
       <View style={{height: 40, flexDirection: 'row'}}>
-        <Toggle layout={2} toggled={left} label={"Channel Left"} onChangeFunc={() => cbFunc(!left)}></Toggle>
-        <Toggle layout={2} toggled={right} label={"Channel Right"} onChangeFunc={() => cbFunc(!right)}></Toggle>
+        <Toggle layout={2} toggled={left} label={"Channel Left"} onChangeFunc={() => onChannelLChangeFunc(!left)}></Toggle>
+        <Toggle layout={2} toggled={right} label={"Channel Right"} onChangeFunc={() => onChannelRChangeFunc(!right)}></Toggle>
       </View>
     </View>
 

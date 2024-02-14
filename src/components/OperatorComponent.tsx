@@ -23,20 +23,26 @@ import ADSR from './ADSR';
 import { ADSRContainerHeight, defaultFontSize, defaultTextColor, mainColor, mainFont, secondaryColor, tvseContainerHeight, wFormSelectorContainerHeight } from '../utils/StyleConsts';
 import { defaultSliderMinValue, defaultSliderStep, maxFreqMultiplication, maxKeyScaleLevel, maxOutputLevel } from '../utils/AppConsts';
 
-import { onOffParam } from '../types/ComponentTypes';
+type TVSE = {
+  value: boolean;
+  label: string;
+  shortName?: string | undefined;
+  updateFunc: (newVal: boolean) => void;
+}
 
 type OperatorProps = {
   operatorId: number;
   operator: Operator;
+  onChangeFunc: (operatorId: number, patch: object) => void;
 };
 
 const OperatorComponent: FC<OperatorProps> = props => {
-  const {operatorId, operator} = props;
+  const {operatorId, operator, onChangeFunc} = props;
 
-  const onAttackUpdate = (newValue: number) => {};
-  const onDecaykUpdate = (newValue: number) => {};
-  const onSustainUpdate = (newValue: number) => {};
-  const onReleaseUpdate = (newValue: number) => {};
+  const onAttackUpdate = (newValue: number) => {onChangeFunc(operatorId, {attack: newValue})};
+  const onDecaykUpdate = (newValue: number) => {onChangeFunc(operatorId, {decay: newValue})};
+  const onSustainUpdate = (newValue: number) => {onChangeFunc(operatorId, {sustain: newValue})};
+  const onReleaseUpdate = (newValue: number) => {onChangeFunc(operatorId, {release: newValue})};
 
   const waveForms = {
     0: ["Sine", <SineWave width={40} height={40} />],
@@ -51,24 +57,23 @@ const OperatorComponent: FC<OperatorProps> = props => {
 
   const waveFormsLength = Object.keys(waveForms).length;
 
-  const onOffParams = [
-    {value: operator.tremolo, label: "Tremolo", shortName:"-AM-"},
-    {value: operator.vibrato, label: "Vibrato", shortName:"-VIB-"},
-    {value: operator.sustainingVoice, label: "Sustaining Voice", shortName:"-EG-"},
-    {value: operator.envelopeScale, label: "Envelope Scale", shortName:"-KSR-"}
+  const tvse = [
+    {value: operator.tremolo, label: "Tremolo", shortName:"-AM-", updateFunc: (newValue: boolean) => {onChangeFunc(operatorId, {tremolo: newValue})}},
+    {value: operator.vibrato, label: "Vibrato", shortName:"-VIB-", updateFunc: (newValue: boolean) => {onChangeFunc(operatorId, {vibrato: newValue})}},
+    {value: operator.sustainingVoice, label: "Sustaining Voice", shortName:"-EG-", updateFunc: (newValue: boolean) => {onChangeFunc(operatorId, {sustainingVoice: newValue})}},
+    {value: operator.envelopeScale, label: "Envelope Scale", shortName:"-KSR-", updateFunc: (newValue: boolean) => {onChangeFunc(operatorId, {envelopeScale: newValue})}}
   ];
 
-  const updateOperatorValue = (...params: any) => {
-
-  }
-
-  const updateOnToggled = (index: number) => {}
+  const updateWaveForm = (newValue: number) => {onChangeFunc(operatorId, {waveForm: newValue})};
+  const updateOutputLevel = (newValue: number) => {onChangeFunc(operatorId, {outputLevel: newValue})};
+  const updateFrequencyMultiplication = (newValue: number) => {onChangeFunc(operatorId, {frequencyMultiplication: newValue})};
+  const updateKeyScale = (newValue: number) => {onChangeFunc(operatorId, {keyScaleLevel: newValue})};
 
   return (
     <View style={operatorStyle.container}>
       <View style={{height: tvseContainerHeight, flexDirection: 'row'}}>
-        {onOffParams.map((param: onOffParam, i: number) => {
-          return <Toggle key={i} layout={onOffParams.length} toggled={param.value} element={i} label={param.label} labelAbbr={param.shortName} onChangeFunc={updateOnToggled}></Toggle>
+        {tvse.map((param: TVSE, i: number) => {
+          return <Toggle key={i} layout={tvse.length} toggled={param.value} element={i} label={param.label} labelAbbr={param.shortName} onChangeFunc={param.updateFunc}></Toggle>
         })}
       </View>
       <View style={{height: ADSRContainerHeight, flexDirection: 'row'}}>
@@ -87,15 +92,15 @@ const OperatorComponent: FC<OperatorProps> = props => {
             optValue={operator.waveForm}
             label={arr[0] as string}
             icon={arr[1]}
-            onChangeFunc={updateOperatorValue}>
+            onChangeFunc={updateWaveForm}>
             </Selector>
             );
        })}
       </View>
       <View>
-        <HorizontalSlider label='Output Level' value={operator.outputLevel} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
-        <HorizontalSlider label='Frequency Multiplication' value={operator.frequencyMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
-        <HorizontalSlider label='Key Scale Level' value={operator.keyScaleLevel} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={updateOperatorValue}></HorizontalSlider>
+        <HorizontalSlider label='Output Level' value={operator.outputLevel} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={updateOutputLevel}></HorizontalSlider>
+        <HorizontalSlider label='Frequency Multiplication' value={operator.frequencyMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={updateFrequencyMultiplication}></HorizontalSlider>
+        <HorizontalSlider label='Key Scale Level' value={operator.keyScaleLevel} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={updateKeyScale}></HorizontalSlider>
       </View>
     </View>
   );

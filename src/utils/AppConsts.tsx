@@ -46,3 +46,8 @@ export const DRUMS = {
   "Hi-Hat": 4,
   "Extra": 5
 }
+
+export const synthTypes = {
+  0: "FM",
+  1: "AM"
+};
