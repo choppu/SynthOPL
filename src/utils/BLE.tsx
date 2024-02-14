@@ -1,25 +1,14 @@
-/* eslint-disable no-bitwise */
-import {useState} from 'react';
-import {PermissionsAndroid, Platform} from 'react-native';
-import {
-  BleError,
-  BleManager,
-  Characteristic,
-  Device,
-} from 'react-native-ble-plx';
-import {PERMISSIONS, requestMultiple} from 'react-native-permissions';
-import DeviceInfo from 'react-native-device-info';
-import { BluetoothLowEnergyApi, VoidCallback } from '../types/BLETYpes';
-
-const SYTH_OPL_UUID = '78790000-60fe-4153-9038-a770b4d65767';
+import { PermissionsAndroid, Platform } from "react-native";
+import { VoidCallback } from "../types/BLETypes";
+import DeviceInfo from "react-native-device-info";
+import { PERMISSIONS, requestMultiple } from "react-native-permissions";
+import { BleManager, Device } from "react-native-ble-plx";
+import { SYTH_OPL_UUID } from "./AppConsts";
 
 const bleManager = new BleManager();
 
-function useBLE(): BluetoothLowEnergyApi {
-  const [allDevices, setAllDevices] = useState<Device[]>([]);
-  const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-
-  const requestPermissions = async (cb: VoidCallback) => {
+export namespace BLE {
+  export async function requestPermissions(cb: VoidCallback) : Promise<void> {
     if (Platform.OS === 'android') {
       const apiLevel = await DeviceInfo.getApiLevel();
 
@@ -57,38 +46,36 @@ function useBLE(): BluetoothLowEnergyApi {
     }
   };
 
-  const isDuplicteDevice = (devices: Device[], nextDevice: Device) => {
+  function isDuplicateDevice(devices: Device[], nextDevice: Device) : boolean {
     return devices.findIndex(device => nextDevice.id === device.id) > -1;
   }
 
-
-  const isSynthOPLDevice = (device: Device) => {
+  function isSynthOPLDevice(device: Device): any {
     if(device.serviceUUIDs) {
       return device.serviceUUIDs[0] == SYTH_OPL_UUID;
     }
   }
 
-  const scanForPeripherals = () =>
-    bleManager.startDeviceScan(null, null, (error, device) => {
+  export function scanForPeripherals(devices: Device[], addNewDeviceFunc: any) : void {
+    bleManager.startDeviceScan(null, null, (error, newDevice) => {
       if (error) {
         console.log(error);
       }
-      if (device) {
-        setAllDevices((prevState: Device[]) => {
-          if (!isDuplicteDevice(prevState, device)) {
-            if(isSynthOPLDevice(device)) {
-              return [...prevState, device];
+
+      if (newDevice) {
+          if (!isDuplicateDevice(devices, newDevice)) {
+            if(isSynthOPLDevice(newDevice)) {
+              addNewDeviceFunc(newDevice);
             }
           }
-          return prevState;
-        });
       }
     });
+  };
 
-  const connectToDevice = async (device: Device, cb: VoidCallback) => {
+  export async function connectToDevice(device: Device, cb: VoidCallback, setConnectedFunc: any): Promise<void> {
     try {
       const deviceConnection = await bleManager.connectToDevice(device.id);
-      setConnectedDevice(deviceConnection);
+      setConnectedFunc(deviceConnection);
       await deviceConnection.discoverAllServicesAndCharacteristics();
       bleManager.stopDeviceScan();
       cb(true);
@@ -97,32 +84,21 @@ function useBLE(): BluetoothLowEnergyApi {
     }
   };
 
-  const disconnectFromDevice = () => {
+  export function disconnectFromDevice(connectedDevice: Device | null, setDisconnectedFunc: any): void {
     if (connectedDevice) {
       bleManager.cancelDeviceConnection(connectedDevice.id);
-      setConnectedDevice(null);
+      setDisconnectedFunc();
     }
   };
 
-  const readCharacteristic = async (device: Device, characteristicUUID: string) : Promise<string | null> => {
+  export async function readCharacteristic(device: Device, characteristicUUID: string): Promise<string | null> {
     return (await device.readCharacteristicForService(SYTH_OPL_UUID, characteristicUUID)).value;
   };
 
-  const writeCharacteristic = async (device: Device, characteristicUUID: string, data: string) : Promise<void> => {
+  export async function writeCharacteristic(device: Device, characteristicUUID: string, data: string): Promise<void> {
     const resp = await device.writeCharacteristicWithResponseForService(SYTH_OPL_UUID, characteristicUUID, data);
     console.log(resp);
   };
-
-  return {
-    scanForPeripherals,
-    requestPermissions,
-    connectToDevice,
-    allDevices,
-    connectedDevice,
-    disconnectFromDevice,
-    readCharacteristic,
-    writeCharacteristic
-  };
 }
 
-export default useBLE;
+export default BLE;

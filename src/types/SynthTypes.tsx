@@ -19,21 +19,22 @@ export interface Keyboard {
   deepTremolo: boolean;
   deepVibrato: boolean;
   feedback: number;
-  synthType: number;
+  synthType2Ops: number;
+  synthType4Ops: number;
+  chLeft: boolean;
+  chRight: boolean;
   enable4Operators: boolean;
-  operator1: Operator;
-  operator2: Operator;
-  operator3: Operator | null;
-  operator4: Operator | null;
+  operators: Operator [];
 }
 
 export interface Drum {
   id: number;
   note: number;
+  chLeft: boolean;
+  chRight: boolean;
   feedback: number;
   synthType: number;
-  operator1: Operator;
-  operator2: Operator;
+  operators: Operator [];
 }
 
 export interface Program {

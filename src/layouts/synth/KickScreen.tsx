@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import HorizontalSlider from '../../components/HorizontalSlider';
 import { defaultSliderMinValue, defaultSliderStep, maxNoteValue } from '../../utils/AppConsts';
 import AppStyle from '../../ui/AppStyle';
-import Operator from '../../components/Operator';
+import Operator from '../../components/OperatorComponent';
 
 const KickScreen = () => {
   const [note, setNote] = useState(0);

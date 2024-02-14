@@ -1,8 +1,9 @@
 import { View, Text, ScrollView } from 'react-native';
-import {useEffect, useState} from 'react';
-import Operator from '../../components/Operator';
+import { useState } from 'react';
+import OperatorComponent from '../../components/OperatorComponent';
 import Toggle from '../../components/Toggle';
 import AppStyle from '../../ui/AppStyle';
+import { Keyboard, Operator } from '../../types/SynthTypes';
 
 const KeyboardScreen = () => {
   const [deepTremolo, setDeepTremolo] = useState(false);
@@ -16,28 +17,20 @@ const KeyboardScreen = () => {
     "OP3": {id: 2, type: "modulator"}
   }
 
-  const handle4Ops = () => {
-    return mode4Ops ? (
-      <View style={AppStyle.operatorsContainer}>
-      <Text style={AppStyle.operatorLabel}>Carrier 1 | -OP2- </Text>
-      <Operator operatorId={1}/>
-      <Text style={AppStyle.operatorLabel}>Modulator 1 | -OP1- </Text>
-      <Operator operatorId={0}/>
-      <Text style={AppStyle.operatorLabel}>Carrier 1 | -OP4- </Text>
-      <Operator operatorId={3}/>
-      <Text style={AppStyle.operatorLabel}>Modulator 2 | -OP3- </Text>
-      <Operator operatorId={2}/>
-      </View>
-    ) :
-    (
-      <View style={AppStyle.operatorsContainer}>
-      <Text style={AppStyle.operatorLabel}>Carrier 1 | -OP2- </Text>
-      <Operator operatorId={1}/>
-      <Text style={AppStyle.operatorLabel}>Modulator 1 | -OP1- </Text>
-      <Operator operatorId={0}/>
-      </View>
+  const handle4Ops = (operators: Operator []) => {
+    const opsNum = mode4Ops ? 4 : 2;
+
+    return(
+      operators.map((operator: Operator, i: number) => {
+        <View>
+            <Text style={AppStyle.operatorLabel}>-OP {i + 1} </Text>
+            <OperatorComponent operatorId={i} operator={operator}/>
+          </View>
+      })
     )
   }
+
+  const dummyOps = [] as Operator[];
 
   return (
     <ScrollView style={AppStyle.instrumentContainer}>
@@ -47,7 +40,7 @@ const KeyboardScreen = () => {
       <Toggle layout={3} toggled={mode4Ops} label={"Enable 4 OPs"} onChangeFunc={() => setMode4Ops(!mode4Ops)}></Toggle>
       </View>
       <View style={AppStyle.operatorsContainer}>
-        {handle4Ops()}
+        {/*handle4Ops(dummyOps)*/}
       </View>
     </ScrollView>
   );

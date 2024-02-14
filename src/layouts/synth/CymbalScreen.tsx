@@ -1,5 +1,5 @@
 import { View, Text, ScrollView } from 'react-native';
-import Operator from '../../components/Operator';
+import Operator from '../../components/OperatorComponent';
 import AppStyle from '../../ui/AppStyle';
 import HorizontalSlider from '../../components/HorizontalSlider';
 import { useState } from 'react';

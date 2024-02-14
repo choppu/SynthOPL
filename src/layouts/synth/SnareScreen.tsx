@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import AppStyle from '../../ui/AppStyle';
 import { defaultSliderMinValue, defaultSliderStep, maxNoteValue } from '../../utils/AppConsts';
 import HorizontalSlider from '../../components/HorizontalSlider';
-import Operator from '../../components/Operator';
+import Operator from '../../components/OperatorComponent';
 import { useState } from 'react';
 
 const SnareScreen = () => {

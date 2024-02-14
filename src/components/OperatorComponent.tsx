@@ -4,6 +4,8 @@ import {
   View
 } from 'react-native';
 
+import { Operator } from '../types/SynthTypes';
+
 import SineWave from '../assets/img/wave-sine.svg';
 import SineEvenWave from '../assets/img/wave-sine-even.svg';
 import HalfSineWave from '../assets/img/wave-half-sine.svg';
@@ -25,9 +27,10 @@ import { onOffParam } from '../types/ComponentTypes';
 
 type OperatorProps = {
   operatorId: number;
+  operator: Operator;
 };
 
-const Operator: FC<OperatorProps> = props => {
+const OperatorComponent: FC<OperatorProps> = props => {
   const [attack, setAttack] = useState(0);
   const [decay, setDecay] = useState(0);
   const [sustain, setSustain] = useState(0);
@@ -156,4 +159,4 @@ const operatorStyle = StyleSheet.create({
   }
 });
 
-export default Operator;
+export default OperatorComponent;

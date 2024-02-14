@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useState} from 'react';
 import {
   FlatList,
   ListRenderItemInfo,
@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Device} from 'react-native-ble-plx';
-import { VoidCallback } from '../types/BLETYpes';
 
 type DeviceModalListItemProps = {
   item: ListRenderItemInfo<Device>;

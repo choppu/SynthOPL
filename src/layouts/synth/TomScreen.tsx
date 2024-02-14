@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { defaultSliderMinValue, defaultSliderStep, maxNoteValue } from '../../utils/AppConsts';
 import HorizontalSlider from '../../components/HorizontalSlider';
 import AppStyle from '../../ui/AppStyle';
-import Operator from '../../components/Operator';
+import Operator from '../../components/OperatorComponent';
 
 const TomScreen = () => {
   const [note, setNote] = useState(0);
