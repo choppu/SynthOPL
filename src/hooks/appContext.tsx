@@ -1,7 +1,9 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from 'react';
-import { Operator, OperatorPatch, OptionPatch, Program } from '../types/SynthTypes';
+import { ConfigPatch, OperatorPatch, OptionPatch, Program } from '../types/SynthTypes';
 import { Device } from 'react-native-ble-plx';
 import SynthOPL from '../utils/Synth';
+import BLE from '../utils/BLE';
+import { GATT_OPL_CHR_UUID_MSG } from '../utils/AppConsts';
 
 const AppContext = createContext({});
 
@@ -49,6 +51,8 @@ function appReducer(appState: AppState, action: AppAction) {
       return {...appState, activeProgram: patchOperator(appState.activeProgram, action.payload as OperatorPatch)}
     case "updateOption":
       return {...appState, activeProgram: patchOption(appState.activeProgram, action.payload as OptionPatch)}
+    case "updateConfig":
+      return {...appState, activeProgram: patchConfig(appState.activeProgram, appState.connectedDevice as Device, action.payload as ConfigPatch)}
     default: {
       console.log('Unknown action: ' + action.type);
       break;
@@ -79,3 +83,11 @@ function patchOption(program: Program, patch: OptionPatch) {
 
   return updatedProgram;
 }
+function patchConfig(program: Program, device: Device, patch: ConfigPatch) {
+  let updatedProgram = { ...program };
+  updatedProgram.keyboard = { ...updatedProgram.keyboard, ...patch.updatedValue };
+  let config = SynthOPL.encodeOPLConfig(updatedProgram.keyboard);
+  BLE.writeCharacteristic(device, GATT_OPL_CHR_UUID_MSG, config);
+  return updatedProgram;
+}
+

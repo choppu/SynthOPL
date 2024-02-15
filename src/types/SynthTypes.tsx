@@ -59,6 +59,10 @@ export interface OptionPatch {
   updatedValue: object;
 }
 
+export interface ConfigPatch {
+  updatedValue: object;
+}
+
 export interface Synth {
   activeProgram: Program | null;
   programList: ProgramDescriptor [];

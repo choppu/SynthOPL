@@ -4,7 +4,7 @@ import AppStyle from '../../ui/AppStyle';
 import { useAppState } from '../../hooks/appContext';
 import Channel from '../../components/Channel';
 import Operators from '../../components/Operators';
-import { OperatorPatch, OptionPatch } from '../../types/SynthTypes';
+import { ConfigPatch, OperatorPatch, OptionPatch } from '../../types/SynthTypes';
 import Selector from '../../components/Selector';
 import { wFormSelectorContainerHeight } from '../../utils/StyleConsts';
 import { synthTypes } from '../../utils/AppConsts';
@@ -21,12 +21,17 @@ const KeyboardScreen = () => {
     dispatch({type: "updateOption", payload: {instrumentId: 6, updatedValue: updatedVal} as OptionPatch});
   }
 
+  const updateConfig = (updatedVal: object) => {
+    dispatch({type: "updateConfig", payload: {updatedValue: updatedVal} as ConfigPatch});
+  }
+
+
   return (
     <ScrollView style={AppStyle.instrumentContainer}>
       <View style={{height: 40, flexDirection: 'row'}}>
-      <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepTremolo} label={"Deep Tremolo"} onChangeFunc={(newVal: boolean) => updateOption({deepTremolo: newVal})}></Toggle>
-      <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepVibrato} label={"Deep Vibrato"} onChangeFunc={(newVal: boolean) => updateOption({deepVibrato: newVal})}></Toggle>
-      <Toggle layout={3} toggled={appState.activeProgram.keyboard.enable4Operators} label={"Enable 4 OPs"} onChangeFunc={(newVal: boolean) => updateOption({enable4Operators: newVal})}></Toggle>
+      <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepTremolo} label={"Deep Tremolo"} onChangeFunc={(newVal: boolean) => updateConfig({deepTremolo: newVal})}></Toggle>
+      <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepVibrato} label={"Deep Vibrato"} onChangeFunc={(newVal: boolean) => updateConfig({deepVibrato: newVal})}></Toggle>
+      <Toggle layout={3} toggled={appState.activeProgram.keyboard.enable4Operators} label={"Enable 4 OPs"} onChangeFunc={(newVal: boolean) => updateConfig({enable4Operators: newVal})}></Toggle>
       </View>
       <Channel
       chFeedback={appState.activeProgram.keyboard.feedback}

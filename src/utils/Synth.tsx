@@ -1,7 +1,5 @@
 import { Drum, Keyboard, Operator, Program, ProgramDescriptor } from "../types/SynthTypes";
-import { CH_LEFT, CH_RIGHT, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
-
-const base64js = require('base64-js');
+import { CH_LEFT, CH_RIGHT, CMD_OPL_CONFIG, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
 
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
@@ -66,23 +64,34 @@ export namespace SynthOPL {
     }
   }
 
-  export function decodeProgram(message: string) : Program {
-    const messageBytes = base64js.toByteArray(message);
+  export function decodeProgram(messageBytes: Uint8Array) : Program {
     let program = newProgram();
 
     program.descriptor.bank = messageBytes[0];
     program.descriptor.num = messageBytes[1];
-    program.descriptor.name = String.fromCharCode.apply(null, messageBytes.subarray(3, 15));
+    program.descriptor.name = String.fromCharCode.apply(null, messageBytes.subarray(3, 15) as any);
 
     decodeKeyboard(messageBytes.subarray(15, 38), program.keyboard);
 
-    let notes = messageBytes.subarray(messageBytes - 6);
+    let notes = messageBytes.subarray(messageBytes.length - 6);
 
     for (let i = 0, y = 38; i < program.drums.length; i++, y += 11) {
       decodeDrum(messageBytes.subarray(y, y + 11), program.drums[i], notes[i]);
     }
 
     return program;
+  }
+
+  export function encodeOPLConfig(keyboard: Keyboard) : Uint8Array {
+    let configBytes = new Uint8Array(3);
+    let deepTremolo = Number(keyboard.deepTremolo) << 7;
+    let deepVibrato = Number(keyboard.deepVibrato) << 6;
+
+    configBytes[0] = CMD_OPL_CONFIG;
+    configBytes[1] = keyboard.enable4Operators ? 0x00 : 0x01;
+    configBytes[2] = (deepTremolo | deepVibrato);
+
+    return configBytes;
   }
 }
 

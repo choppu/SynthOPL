@@ -6,6 +6,7 @@ import { BleManager, Device } from "react-native-ble-plx";
 import { SYTH_OPL_UUID } from "./AppConsts";
 
 const bleManager = new BleManager();
+const base64js = require('base64-js');
 
 export namespace BLE {
   export async function requestPermissions(cb: VoidCallback) : Promise<void> {
@@ -91,13 +92,14 @@ export namespace BLE {
     }
   };
 
-  export async function readCharacteristic(device: Device, characteristicUUID: string): Promise<string | null> {
-    return (await device.readCharacteristicForService(SYTH_OPL_UUID, characteristicUUID)).value;
+  export async function readCharacteristic(device: Device, characteristicUUID: string): Promise<Uint8Array | null> {
+    let response = (await device.readCharacteristicForService(SYTH_OPL_UUID, characteristicUUID)).value;
+    return base64js.toByteArray(response);
   };
 
-  export async function writeCharacteristic(device: Device, characteristicUUID: string, data: string): Promise<void> {
-    const resp = await device.writeCharacteristicWithResponseForService(SYTH_OPL_UUID, characteristicUUID, data);
-    console.log(resp);
+  export async function writeCharacteristic(device: Device, characteristicUUID: string, data: Uint8Array): Promise<void> {
+    const base64String = base64js.fromByteArray(data);
+    const resp = await device.writeCharacteristicWithoutResponseForService(SYTH_OPL_UUID, characteristicUUID, base64String);
   };
 }
 

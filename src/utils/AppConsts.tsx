@@ -51,3 +51,10 @@ export const synthTypes = {
   0: "FM",
   1: "AM"
 };
+
+export const CMD_NOTE_ON = 0x00;
+export const CMD_NOTE_OFF = 0x01;
+export const CMD_OPL_CONFIG = 0x02;
+export const CMD_CHANNEL_CONFIG = 0x03;
+export const CMD_LOAD_PROGRAM = 0x04;
+export const CMD_DRUM_NOTES = 0x05;
