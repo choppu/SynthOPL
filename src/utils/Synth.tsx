@@ -1,5 +1,5 @@
 import { Drum, Keyboard, Operator, Program, ProgramDescriptor } from "../types/SynthTypes";
-import { CH_LEFT, CH_RIGHT, CMD_OPL_CONFIG, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
+import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
 
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
@@ -82,8 +82,20 @@ export namespace SynthOPL {
     return program;
   }
 
+  export function encodeOperator(operator: Operator) : Uint8Array {
+    let opBytes = new Uint8Array(CMD_OPERATORS_LENGTH);
+
+    opBytes[0] = operator.frequencyMultiplication | (Number(operator.envelopeScale) << 4) | (Number(operator.sustainingVoice) << 5) | (Number(operator.vibrato) << 6) | (Number(operator.tremolo) << 7);
+    opBytes[1] = 63 - operator.outputLevel | (operator.keyScaleLevel << 6);
+    opBytes[2] = operator.decay | (operator.attack << 4);
+    opBytes[3] = operator.release | (operator.sustain << 4);
+    opBytes[4] = operator.waveForm;
+
+    return opBytes;
+  }
+
   export function encodeOPLConfig(keyboard: Keyboard) : Uint8Array {
-    let configBytes = new Uint8Array(3);
+    let configBytes = new Uint8Array(CMD_CONFIG_LENGTH);
     let deepTremolo = Number(keyboard.deepTremolo) << 7;
     let deepVibrato = Number(keyboard.deepVibrato) << 6;
 
@@ -92,6 +104,37 @@ export namespace SynthOPL {
     configBytes[2] = (deepTremolo | deepVibrato);
 
     return configBytes;
+  }
+
+  export function encodeDrumNotes(drums: Drum[]) : Uint8Array {
+    let notesBytes = new Uint8Array(CMD_NOTES_LENGTH);
+
+    notesBytes[0] = CMD_DRUM_NOTES;
+    drums.map(((drum: Drum, index: number) => notesBytes[index + 1] = drum.note));
+
+    return notesBytes;
+  }
+
+  export function encodeChannel(channel: Keyboard | Drum) : Uint8Array {
+    let arrLength = (channel as Keyboard).enable4Operators ? CMD_CHANNEL_4_LENGTH : CMD_CHANNEL_2_LENGTH;
+    let channelBytes = new Uint8Array(arrLength);
+    let chFeedback = channel.feedback << 1;
+    let chLeftRight = (Number(channel.chLeft) << 4) | (Number(channel.chLeft) << 5);
+    let enable4Ops = ((channel as Keyboard).enable4Operators ? (channel as Keyboard).synthType4Ops : 0) << 7;
+    let opsI = 3;
+    let opCount = (channel as Keyboard).enable4Operators ? 4 : 2;
+
+    channelBytes[0] = CMD_CHANNEL_CONFIG;
+    channelBytes[1] = channel.id;
+    channelBytes[2] = channel.synthType | chFeedback | chLeftRight | enable4Ops;
+
+    channel.operators.slice(0, opCount).map((operator: Operator, index: number) =>{
+      let opBytes = encodeOperator(operator);
+      channelBytes.set(opBytes, opsI);
+      opsI += 5;
+    });
+
+    return channelBytes;
   }
 }
 

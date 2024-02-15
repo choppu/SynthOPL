@@ -58,3 +58,10 @@ export const CMD_OPL_CONFIG = 0x02;
 export const CMD_CHANNEL_CONFIG = 0x03;
 export const CMD_LOAD_PROGRAM = 0x04;
 export const CMD_DRUM_NOTES = 0x05;
+
+export const CMD_CONFIG_LENGTH = 3;
+export const CMD_NOTES_LENGTH = 7;
+export const CMD_CHANNEL_2_LENGTH = 13;
+export const CMD_CHANNEL_4_LENGTH = 23;
+
+export const CMD_OPERATORS_LENGTH = 5;

@@ -5,7 +5,7 @@ import { defaultSliderMinValue, defaultSliderStep, maxNoteValue } from '../../ut
 import { useAppState } from '../../hooks/appContext';
 import Channel from '../../components/Channel';
 import Operators from '../../components/Operators';
-import { OperatorPatch, OptionPatch } from '../../types/SynthTypes';
+import { NotePatch, OperatorPatch, OptionPatch } from '../../types/SynthTypes';
 import SynthType from '../../components/SynthType';
 
 const DrumScreen = ({ route }: any) =>  {
@@ -13,8 +13,8 @@ const DrumScreen = ({ route }: any) =>  {
   const {appState, dispatch} = useAppState();
   const drum = appState.activeProgram.drums[id];
 
-  const updateNote = (newNote: number) => {
-    updateOption({note: newNote});
+  const updateNote = (updatedVal: object) => {
+    dispatch({type: "updateNotes", payload: {instrumentId: id, updatedValue: updatedVal} as NotePatch});
   }
 
   const updateOperator = (operatorId: number, updatedVal: object) => {
@@ -27,7 +27,7 @@ const DrumScreen = ({ route }: any) =>  {
 
   return (
     <ScrollView style={AppStyle.instrumentContainer}>
-      <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={updateNote}></HorizontalSlider>
+      <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newNote: number) => updateNote({note: newNote})}></HorizontalSlider>
       <Channel
       chFeedback={drum.feedback}
       left={drum.chLeft}
