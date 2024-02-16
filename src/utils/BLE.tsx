@@ -75,7 +75,7 @@ export namespace BLE {
 
   export async function connectToDevice(device: Device, cb: VoidCallback, setConnectedFunc: any): Promise<void> {
     try {
-      const deviceConnection = await bleManager.connectToDevice(device.id);
+      const deviceConnection = await bleManager.connectToDevice(device.id, {requestMTU: 256});
       setConnectedFunc(deviceConnection);
       await deviceConnection.discoverAllServicesAndCharacteristics();
       bleManager.stopDeviceScan();

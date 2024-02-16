@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg class="icon line-color" width="109" height="109" fill="#000000" data-name="Line Color" version="1.1" viewBox="0 0 3.27 3.27" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(.060952)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(.16667 0 0 .16667 -.365 -.365)" stroke-width="1.0001">
+   <path id="secondary" d="m8 13h6m0-4h-6"/>
+   <path id="primary" d="m12 21h-7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1h9l4 4v6"/>
+  </g>
+  <path d="m2.8174 2.5144-0.49816 0.49816h-0.28408v-0.28408l0.49816-0.49816c0.039451-0.03867 0.10259-0.03867 0.14204 0l0.14204 0.14204c0.03867 0.039451 0.03867 0.10259 0 0.14204z" stroke-width=".15" data-name="primary"/>
+ </g>
+</svg>

@@ -14,16 +14,18 @@ import DeviceModal from '../components/DeviceConnectionModal';
 import AppStyle from '../ui/AppStyle';
 import SynthScreen from './SynthScreen';
 
-import BLEConnectedIcon from '../assets/img/ble_connected.svg';
 import ProgramsScreenIcon from '..//assets/img/programs_list.svg';
 import SynthScreenIcon from '../assets/img/synth.svg';
 import KeyboardScreenIcon from '../assets/img/midi_keyboard.svg'
-import BLEDisconnectedIcon from '../assets/img/ble_disconnected.svg';
+import AddProgramIcon from '../assets/img/add_button.svg';
+import ModifyProgramIcon from '../assets/img/modify_button.svg';
 import { mainColor, mainFont, tabBarInactiveColor } from '../utils/StyleConsts';
 import ProgramsScreen from './ProgramsScreen';
 import VirtualKeyboardScreen from './VirtualKeyboardScreen';
 import BLE from '../utils/BLE';
 import SynthOPL from '../utils/Synth';
+import ProgramAddModal from '../components/ProgramAddModal';
+import OPLButton from '../components/OPLButton';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +33,15 @@ const MainScreen = () => {
   const {appState, dispatch} = useAppState();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allDevices, setAllDevices] = useState<Device[]>([]);
+
+  const addIc = <AddProgramIcon width={20} height={20} fill={"white"}/>
+  const modifyIc = <ModifyProgramIcon width={20} height={20} fill={"white"}/>
+
+  const [isAddProgramModalVisible, setAddProgramModalVisible] = useState(false);
+
+  const handleModalVisibility = (val: boolean) => {
+    setAddProgramModalVisible(!val);
+  }
 
   const addDevice = (newDevice: Device) => {
     setAllDevices([...allDevices, newDevice]);
@@ -76,24 +87,23 @@ const MainScreen = () => {
 
   return (
     <SafeAreaView style={AppStyle.container}>
-    <View style={AppStyle.topContentContainer}>
-    <TouchableOpacity
-      onPress={appState.connectedDevice ? disconnectDevice : openModal}
-      style={AppStyle.connectButton}>
-      <Text style={AppStyle.connectButtonText}>
-        {appState.connectedDevice ? 'Disconnect Device' : 'Connect Device'}
-      </Text>
-    </TouchableOpacity>
-    <View style={AppStyle.bleImageContainer}>
-      {appState.connectedDevice ? ( <BLEConnectedIcon width={28} height={28}/> ) : ( <BLEDisconnectedIcon width={28} height={28} /> )}
+      <View style={AppStyle.topContentContainer}>
+        <TouchableOpacity onPress={appState.connectedDevice ? disconnectDevice : openModal} style={AppStyle.connectButton}>
+          <Text style={AppStyle.connectButtonText}> {appState.connectedDevice ? 'Disconnect Device' : 'Connect Device'}</Text>
+        </TouchableOpacity>
+        <View style={AppStyle.programButtonsContainer}>
+          <View style={AppStyle.buttonContainer}>
+            <OPLButton title={'Add Program'} value={isAddProgramModalVisible} icon={addIc} onChangeFunc={handleModalVisibility}></OPLButton>
+          </View>
+          <View style={AppStyle.buttonContainer}>
+            <OPLButton title={'Modify Program'} value={''} icon={modifyIc} onChangeFunc={(val: any) => {}}></OPLButton>
+          </View>
+        </View>
+      </View>
+      <DeviceModal devices={allDevices} closeModal={hideModal} visible={isModalVisible} connectToPeripheral={handleDeviceConnection} />
+    <View>
+      <ProgramAddModal isVisible={isAddProgramModalVisible} onChangeFunc={handleModalVisibility}></ProgramAddModal>
     </View>
-    </View>
-    <DeviceModal
-      devices={allDevices}
-      closeModal={hideModal}
-      visible={isModalVisible}
-      connectToPeripheral={handleDeviceConnection}
-    />
       <NavigationContainer>
             <Tab.Navigator initialRouteName="Synth" screenOptions={{
               headerShown: false,

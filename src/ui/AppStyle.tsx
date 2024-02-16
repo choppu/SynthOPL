@@ -43,7 +43,16 @@ const AppStyle = StyleSheet.create({
     fontSize: 13,
     color: mainColor,
     padding: 10
-  }
+  },
+  programButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '25%',
+    marginRight: '5%'
+  },
+  buttonContainer: {
+    marginLeft: 20
+  },
 });
 
 export default AppStyle;

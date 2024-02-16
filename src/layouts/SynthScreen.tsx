@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useState} from 'react';
 import { View, Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import KeyboardScreen from './synth/KeyboardScreen';
@@ -9,6 +9,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const SynthScreen = () => {
   return (
+    <View style={{ flex: 1, flexDirection: 'row' }}>
     <View style={{ flex: 1 }}>
       <Tab.Navigator
       initialRouteName="Keyboard"
@@ -36,6 +37,7 @@ const SynthScreen = () => {
             );
        })}
     </Tab.Navigator>
+    </View>
     </View>
   );
 }

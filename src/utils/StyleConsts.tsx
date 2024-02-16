@@ -1,6 +1,7 @@
 {/* Style Consts*/}
 export const mainColor = "#04303E";
 export const secondaryColor = "#89A9B1";
+export const selectionColor = "#89A9B177"
 export const mainBackgroundColor = '#F2F2F2';
 export const mainFont = "Inconsolata-Medium";
 export const defaultTextColor = "#FFFFFF";

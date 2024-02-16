@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg class="icon line-color" width="109" height="109" fill="#000000" data-name="Line Color" version="1.1" viewBox="0 0 3.27 3.27" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.16667 0 0 .16667 -.365 -.365)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.0001">
+  <path id="secondary" d="m16 19h4m-2-2v4m-10-8h6m0-4h-6"/>
+  <path id="primary" d="m12 21h-7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1h9l4 4v6"/>
+ </g>
+</svg>
