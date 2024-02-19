@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { defaultSliderMinValue, maxNoteValue, defaultSliderStep } from "../utils/AppConsts";
+import { defaultSliderMinValue, maxNoteValue, defaultSliderStep, maxFeedbackValue } from "../utils/AppConsts";
 import HorizontalSlider from "./HorizontalSlider";
 import Toggle from "./Toggle";
 import { FC } from "react";
@@ -19,7 +19,7 @@ const Channel: FC<ChannelProps> = props => {
   return (
     <View>
       <View style={{height: 40}}>
-        <HorizontalSlider label='Feedback' value={chFeedback} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newVal: number) => onFeedbackChangeFunc(newVal)}></HorizontalSlider>
+        <HorizontalSlider label='Feedback' value={chFeedback} minValue={defaultSliderMinValue} maxValue={maxFeedbackValue} step={defaultSliderStep} onChangeFunc={(newVal: number) => onFeedbackChangeFunc(newVal)}></HorizontalSlider>
       </View>
       <View style={{height: 40, flexDirection: 'row'}}>
         <Toggle layout={2} toggled={left} label={"Channel Left"} onChangeFunc={() => onChannelLChangeFunc(!left)}></Toggle>

@@ -119,7 +119,7 @@ export namespace SynthOPL {
     let arrLength = (channel as Keyboard).enable4Operators ? CMD_CHANNEL_4_LENGTH : CMD_CHANNEL_2_LENGTH;
     let channelBytes = new Uint8Array(arrLength);
     let chFeedback = channel.feedback << 1;
-    let chLeftRight = (Number(channel.chLeft) << 4) | (Number(channel.chLeft) << 5);
+    let chLeftRight = (Number(channel.chLeft) << 4) | (Number(channel.chRight) << 5);
     let enable4Ops = ((channel as Keyboard).enable4Operators ? (channel as Keyboard).synthType4Ops : 0) << 7;
     let opsI = 3;
     let opCount = (channel as Keyboard).enable4Operators ? 4 : 2;
@@ -128,7 +128,7 @@ export namespace SynthOPL {
     channelBytes[1] = channel.id;
     channelBytes[2] = channel.synthType | chFeedback | chLeftRight | enable4Ops;
 
-    channel.operators.slice(0, opCount).map((operator: Operator, index: number) =>{
+    channel.operators.slice(0, opCount).map((operator: Operator) =>{
       let opBytes = encodeOperator(operator);
       channelBytes.set(opBytes, opsI);
       opsI += 5;

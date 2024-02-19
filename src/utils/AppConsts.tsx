@@ -6,6 +6,7 @@ export const maxOutputLevel = 63;
 export const maxFreqMultiplication = 15;
 export const maxKeyScaleLevel = 3;
 export const maxNoteValue = 127;
+export const maxFeedbackValue = 7;
 
 {/* BLE Consts */}
 export const SYTH_OPL_UUID = '78790000-60fe-4153-9038-a770b4d65767';
