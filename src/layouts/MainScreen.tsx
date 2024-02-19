@@ -18,14 +18,13 @@ import ProgramsScreenIcon from '..//assets/img/programs_list.svg';
 import SynthScreenIcon from '../assets/img/synth.svg';
 import KeyboardScreenIcon from '../assets/img/midi_keyboard.svg'
 import AddProgramIcon from '../assets/img/add_button.svg';
-import ModifyProgramIcon from '../assets/img/modify_button.svg';
 import { mainColor, mainFont, tabBarInactiveColor } from '../utils/StyleConsts';
 import ProgramsScreen from './ProgramsScreen';
 import VirtualKeyboardScreen from './VirtualKeyboardScreen';
 import BLE from '../utils/BLE';
 import SynthOPL from '../utils/Synth';
 import ProgramAddModal from '../components/ProgramAddModal';
-import OPLButton from '../components/OPLButton';
+import IconButton from '../components/IconButton';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,9 +34,9 @@ const MainScreen = () => {
   const [allDevices, setAllDevices] = useState<Device[]>([]);
 
   const addIc = <AddProgramIcon width={20} height={20} fill={"white"}/>
-  const modifyIc = <ModifyProgramIcon width={20} height={20} fill={"white"}/>
 
   const [isAddProgramModalVisible, setAddProgramModalVisible] = useState(false);
+  const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
 
   const handleModalVisibility = (val: boolean) => {
     setAddProgramModalVisible(!val);
@@ -66,6 +65,7 @@ const MainScreen = () => {
 
   const disconnectDevice = async () => {
     BLE.disconnectFromDevice(appState.connectedDevice, () => {});
+    setSaveBtnDisabled(true);
     dispatch({type: "connect", payload: null});
   }
 
@@ -81,6 +81,7 @@ const MainScreen = () => {
           let program = SynthOPL.decodeProgram(data);
           dispatch({type: "setProgram", payload: program});
         }
+        setSaveBtnDisabled(false);
       }
     }, setConnectedDevice)
   }
@@ -93,10 +94,7 @@ const MainScreen = () => {
         </TouchableOpacity>
         <View style={AppStyle.programButtonsContainer}>
           <View style={AppStyle.buttonContainer}>
-            <OPLButton title={'Add Program'} value={isAddProgramModalVisible} icon={addIc} onChangeFunc={handleModalVisibility}></OPLButton>
-          </View>
-          <View style={AppStyle.buttonContainer}>
-            <OPLButton title={'Modify Program'} value={''} icon={modifyIc} onChangeFunc={(val: any) => {}}></OPLButton>
+            <IconButton title={'Add Program'} disabled={saveBtnDisabled} value={isAddProgramModalVisible} icon={addIc} onChangeFunc={handleModalVisibility}></IconButton>
           </View>
         </View>
       </View>

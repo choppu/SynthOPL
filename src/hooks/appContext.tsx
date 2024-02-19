@@ -1,9 +1,9 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from 'react';
-import { ConfigPatch, NotePatch, OperatorPatch, OptionPatch, Program } from '../types/SynthTypes';
+import { ConfigPatch, DescriptorPatch, NotePatch, OperatorPatch, OptionPatch, Program } from '../types/SynthTypes';
 import { Device } from 'react-native-ble-plx';
 import SynthOPL from '../utils/Synth';
 import BLE from '../utils/BLE';
-import { GATT_OPL_CHR_UUID_MSG } from '../utils/AppConsts';
+import { GATT_OPL_CHR_UUID_MSG, GATT_OPL_CHR_UUID_PROGRAM } from '../utils/AppConsts';
 
 const AppContext = createContext({});
 
@@ -55,6 +55,8 @@ function appReducer(appState: AppState, action: AppAction) {
       return {...appState, activeProgram: patchConfig(appState.activeProgram, appState.connectedDevice as Device, action.payload as ConfigPatch)}
     case "updateNotes":
       return {...appState, activeProgram: patchNote(appState.activeProgram, appState.connectedDevice as Device, action.payload as NotePatch)}
+    case "saveProgram":
+      return {...appState, activeProgram: saveProgram(appState.activeProgram, appState.connectedDevice as Device, action.payload as DescriptorPatch)}
     default: {
       console.log('Unknown action: ' + action.type);
       break;
@@ -110,6 +112,14 @@ function patchNote(program: Program, device: Device, patch: NotePatch) {
   updatedProgram.drums[patch.instrumentId] = { ...updatedProgram.drums[patch.instrumentId], ...patch.updatedValue }
   let notes = SynthOPL.encodeDrumNotes(updatedProgram.drums);
   BLE.writeCharacteristic(device, GATT_OPL_CHR_UUID_MSG, notes);
+  return updatedProgram;
+}
+
+function saveProgram(program: Program, device: Device, patch: DescriptorPatch) {
+  let updatedProgram = { ...program };
+  updatedProgram.descriptor = { ...updatedProgram.descriptor, ...patch.updatedValue }
+  let data = SynthOPL.encodeProgramDescriptor(updatedProgram.descriptor)
+  BLE.writeCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM, data);
   return updatedProgram;
 }
 

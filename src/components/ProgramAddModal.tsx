@@ -1,7 +1,10 @@
-import React, {FC, useState } from "react";
+import React, {FC, useEffect, useState } from "react";
 import {StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { defaultTextColor, mainColor, mainFont, secondaryColor, selectionColor, tabBarInactiveColor, touchableOpacityActive } from "../utils/StyleConsts";
 import Modal from "react-native-modal/dist/modal";
+import { useAppState } from "../hooks/appContext";
+import TextButton from "./TextButton";
+import { DescriptorPatch } from "../types/SynthTypes";
 
 type ProgramAddModalProps = {
   isVisible: boolean;
@@ -10,9 +13,21 @@ type ProgramAddModalProps = {
 
 const ProgramAddModal: FC<ProgramAddModalProps> = props => {
   const {isVisible, onChangeFunc} = props;
-  const[programName, setProgramName] = useState('Main');
-  const[programBank, setProgramBank] = useState('0');
-  const[programNumber, setProgramNumber] = useState('0');
+  const {appState, dispatch} = useAppState();
+  const[programName, setProgramName] = useState('');
+  const[programBank, setProgramBank] = useState('');
+  const[programNumber, setProgramNumber] = useState('');
+
+  useEffect(() => {
+    setProgramName(appState.activeProgram.descriptor.name);
+    setProgramBank(appState.activeProgram.descriptor.bank?.toString());
+    setProgramNumber(appState.activeProgram.descriptor.num?.toString());
+  }, [isVisible]);
+
+  const programSave = () => {
+    dispatch({type: "saveProgram", payload: {updatedValue: {name: programName, bank: Number(programBank), num: Number(programNumber)}} as DescriptorPatch});
+    onChangeFunc(isVisible);
+  }
 
   return (
     <Modal isVisible={isVisible} onSwipeComplete={() => onChangeFunc(isVisible)} swipeDirection={['up', 'left', 'right', 'down']} style={modalStyle.modalContainer}>
@@ -23,16 +38,20 @@ const ProgramAddModal: FC<ProgramAddModalProps> = props => {
           </View>
           <View style={modalStyle.inputContainer}>
             <TextInput placeholder="Name" style={modalStyle.textInput} cursorColor={mainColor} value={programName} onChangeText={setProgramName} underlineColorAndroid={'transparent'} selectionColor={selectionColor}></TextInput>
-            <Text style={modalStyle.placeholder}>Name</Text>
+            <Text style={modalStyle.placeholder}>Name - * max 12 chars</Text>
           </View>
           <View style={modalStyle.inputContainer}>
-            <TextInput keyboardType='numeric' placeholder="Bank" style={modalStyle.textInput} cursorColor={mainColor} value={programBank.toString()} key={"bank"} onChangeText={setProgramBank} selectionColor={selectionColor}></TextInput>
+            <TextInput keyboardType='numeric' placeholder="Bank" style={modalStyle.textInput} cursorColor={mainColor} value={programBank} key={"bank"} onChangeText={setProgramBank} selectionColor={selectionColor}></TextInput>
             <Text style={modalStyle.placeholder}>Bank - *0-127</Text>
           </View>
           <View style={modalStyle.inputContainer}>
-            <TextInput keyboardType='numeric' placeholder="Number" style={modalStyle.textInput} cursorColor={mainColor} value={programNumber.toString()} key={"num"} onChangeText={setProgramNumber} selectionColor={selectionColor}></TextInput>
+            <TextInput keyboardType='numeric' placeholder="Number" style={modalStyle.textInput} cursorColor={mainColor} value={programNumber} key={"num"} onChangeText={setProgramNumber} selectionColor={selectionColor}></TextInput>
             <Text style={modalStyle.placeholder}>Number - *0-127</Text>
           </View>
+          <View style={modalStyle.buttonsContainer}>
+          <TextButton label={"Cancel"} btnColor={tabBarInactiveColor} btnWidth={'50%'} btnJustifyContent='flex-start' disabled={false} onChangeFunc={() => onChangeFunc(isVisible)}></TextButton>
+          <TextButton label={"Save"} btnColor={mainColor} disabled={false} btnWidth={'50%'} btnJustifyContent='flex-end' onChangeFunc={() => programSave()}></TextButton>
+        </View>
         </View>
     </Modal>
   )};
@@ -94,6 +113,10 @@ const modalStyle = StyleSheet.create({
     bottom: 15,
     top: 15,
     fontSize: 14
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    width: '80%'
   }
 });
 

@@ -59,6 +59,8 @@ export interface OptionPatch {
   updatedValue: object;
 }
 
+export interface DescriptorPatch extends ConfigPatch, ConfigPatch { }
+
 export interface ConfigPatch {
   updatedValue: object;
 }

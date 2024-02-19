@@ -1,5 +1,5 @@
 import { Drum, Keyboard, Operator, Program, ProgramDescriptor } from "../types/SynthTypes";
-import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
+import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, CMD_SAVE_LENGTH, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
 
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
@@ -135,6 +135,17 @@ export namespace SynthOPL {
     });
 
     return channelBytes;
+  }
+
+  export function encodeProgramDescriptor(descriptor: ProgramDescriptor) : Uint8Array {
+    let descriptorBytes = new Uint8Array(CMD_SAVE_LENGTH);
+    let nameBytes = Array.from(descriptor.name, char => char.charCodeAt(0));
+
+    descriptorBytes[0] = descriptor.bank;
+    descriptorBytes[1] = descriptor.num;
+    descriptorBytes.set(nameBytes, 2);
+
+    return descriptorBytes;
   }
 }
 

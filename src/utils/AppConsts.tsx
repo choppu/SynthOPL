@@ -64,4 +64,7 @@ export const CMD_NOTES_LENGTH = 7;
 export const CMD_CHANNEL_2_LENGTH = 13;
 export const CMD_CHANNEL_4_LENGTH = 23;
 
+
 export const CMD_OPERATORS_LENGTH = 5;
+
+export const CMD_SAVE_LENGTH = 14;
