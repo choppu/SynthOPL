@@ -39,6 +39,7 @@ export const OP_DECAY = 0x0F;
 export const OP_RELEASE = 0x0F;
 export const OP_WAVEFORM = 0x07;
 
+{/* Drums Consts */}
 export const DRUMS = {
   "Kick": 0,
   "Snare": 1,
@@ -48,11 +49,13 @@ export const DRUMS = {
   "Extra": 5
 }
 
+{/* Synth Types Consts */}
 export const synthTypes = {
   0: "FM",
   1: "AM"
 };
 
+{/* CMDs Consts */}
 export const CMD_NOTE_ON = 0x00;
 export const CMD_NOTE_OFF = 0x01;
 export const CMD_OPL_CONFIG = 0x02;
@@ -69,3 +72,11 @@ export const CMD_CHANNEL_4_LENGTH = 23;
 export const CMD_OPERATORS_LENGTH = 5;
 
 export const CMD_SAVE_LENGTH = 14;
+
+export const CMD_LOAD_LENGTH = 3;
+
+{/* Programs List Consts */}
+
+export const programsListFirst = 0x40;
+export const programsListLast = 0x80;
+export const programDescriptorLength = 14;

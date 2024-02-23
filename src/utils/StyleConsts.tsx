@@ -4,6 +4,7 @@ export const secondaryColor = "#89A9B1";
 export const selectionColor = "#89A9B177"
 export const mainBackgroundColor = '#F2F2F2';
 export const mainFont = "Inconsolata-Medium";
+export const mainFontSemiBold = 'Inconsolata-SemiBold';
 export const defaultTextColor = "#FFFFFF";
 export const defaultFontSize = 9;
 

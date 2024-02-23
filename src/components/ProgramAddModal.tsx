@@ -1,10 +1,11 @@
 import React, {FC, useEffect, useState } from "react";
-import {StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { defaultTextColor, mainColor, mainFont, secondaryColor, selectionColor, tabBarInactiveColor, touchableOpacityActive } from "../utils/StyleConsts";
+import {StyleSheet, Text, View } from "react-native";
+import { mainColor, mainFont, secondaryColor, tabBarInactiveColor } from "../utils/StyleConsts";
 import Modal from "react-native-modal/dist/modal";
 import { useAppState } from "../hooks/appContext";
 import TextButton from "./TextButton";
 import { DescriptorPatch } from "../types/SynthTypes";
+import OPLInput from "./OPLInput";
 
 type ProgramAddModalProps = {
   isVisible: boolean;
@@ -36,18 +37,9 @@ const ProgramAddModal: FC<ProgramAddModalProps> = props => {
           <View style={modalStyle.hr}></View>
             <Text style={modalStyle.header}>-Save Program-</Text>
           </View>
-          <View style={modalStyle.inputContainer}>
-            <TextInput placeholder="Name" style={modalStyle.textInput} cursorColor={mainColor} value={programName} onChangeText={setProgramName} underlineColorAndroid={'transparent'} selectionColor={selectionColor}></TextInput>
-            <Text style={modalStyle.placeholder}>Name - * max 12 chars</Text>
-          </View>
-          <View style={modalStyle.inputContainer}>
-            <TextInput keyboardType='numeric' placeholder="Bank" style={modalStyle.textInput} cursorColor={mainColor} value={programBank} key={"bank"} onChangeText={setProgramBank} selectionColor={selectionColor}></TextInput>
-            <Text style={modalStyle.placeholder}>Bank - *0-127</Text>
-          </View>
-          <View style={modalStyle.inputContainer}>
-            <TextInput keyboardType='numeric' placeholder="Number" style={modalStyle.textInput} cursorColor={mainColor} value={programNumber} key={"num"} onChangeText={setProgramNumber} selectionColor={selectionColor}></TextInput>
-            <Text style={modalStyle.placeholder}>Number - *0-127</Text>
-          </View>
+          <OPLInput inputValue={programName} placeholder={"Name - * max 12 chars"} title={"Name"} keyboard={"default"} onChangeFunc={setProgramName}></OPLInput>
+          <OPLInput inputValue={programBank} placeholder={"Bank - *0-127"} title={"Bank"} keyboard={"numeric"} onChangeFunc={setProgramBank}></OPLInput>
+          <OPLInput inputValue={programNumber} placeholder={"Number - *0-127"} title={"Number"} keyboard={"numeric"} onChangeFunc={setProgramNumber}></OPLInput>
           <View style={modalStyle.buttonsContainer}>
           <TextButton label={"Cancel"} btnColor={tabBarInactiveColor} btnWidth={'50%'} btnJustifyContent='flex-start' disabled={false} onChangeFunc={() => onChangeFunc(isVisible)}></TextButton>
           <TextButton label={"Save"} btnColor={mainColor} disabled={false} btnWidth={'50%'} btnJustifyContent='flex-end' onChangeFunc={() => programSave()}></TextButton>
@@ -93,26 +85,6 @@ const modalStyle = StyleSheet.create({
     fontSize: 17,
     fontWeight: '500',
     marginTop: 15,
-  },
-  inputContainer: {
-    width: '80%'
-  },
-  textInput: {
-    width: '100%',
-    color: mainColor,
-    borderBottomColor: mainColor,
-    borderBottomWidth: 1,
-    fontFamily: mainFont,
-    fontSize: 14
-  },
-  placeholder: {
-    color: secondaryColor,
-    position: 'absolute',
-    fontFamily: mainFont,
-    right: 0,
-    bottom: 15,
-    top: 15,
-    fontSize: 14
   },
   buttonsContainer: {
     flexDirection: 'row',

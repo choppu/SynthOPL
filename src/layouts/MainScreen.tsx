@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAppState } from '../hooks/appContext';
 import React, { useState } from 'react';
 import { Device } from 'react-native-ble-plx';
-import { GATT_OPL_CHR_UUID_PROGRAM } from '../utils/AppConsts';
+import { GATT_OPL_CHR_UUID_LIST_PRG, GATT_OPL_CHR_UUID_PROGRAM } from '../utils/AppConsts';
 import DeviceModal from '../components/DeviceConnectionModal';
 import AppStyle from '../ui/AppStyle';
 import SynthScreen from './SynthScreen';
@@ -25,6 +25,8 @@ import BLE from '../utils/BLE';
 import SynthOPL from '../utils/Synth';
 import ProgramAddModal from '../components/ProgramAddModal';
 import IconButton from '../components/IconButton';
+import Utils from '../utils/Utils';
+import { ProgramsListItem } from '../types/SynthTypes';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,11 +78,22 @@ const MainScreen = () => {
   const handleDeviceConnection = (device: Device) => {
     BLE.connectToDevice(device, async(isConnected: boolean) => {
       if(isConnected) {
-        let data = await BLE.readCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM);
-        if(data) {
-          let program = SynthOPL.decodeProgram(data);
+        let programdData = await BLE.readCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM);
+        let programs = [] as ProgramsListItem[];
+        let programsList = await Utils.fetchList(device, programs, false);
+
+        dispatch({type: "setProgramsList", payload: programsList});
+
+        if(programdData) {
+          let program = SynthOPL.decodeProgram(programdData);
           dispatch({type: "setProgram", payload: program});
         }
+
+        BLE.subscribeToProgramUpdate(device, (program) => {
+          let prg = SynthOPL.decodeProgram(program);
+          dispatch({type: "setProgram", payload: prg});
+        });
+
         setSaveBtnDisabled(false);
       }
     }, setConnectedDevice)

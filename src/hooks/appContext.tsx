@@ -1,5 +1,5 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from 'react';
-import { ConfigPatch, DescriptorPatch, NotePatch, OperatorPatch, OptionPatch, Program } from '../types/SynthTypes';
+import { ConfigPatch, DescriptorPatch, NotePatch, OperatorPatch, OptionPatch, Program, ProgramDescriptor, ProgramsListItem } from '../types/SynthTypes';
 import { Device } from 'react-native-ble-plx';
 import SynthOPL from '../utils/Synth';
 import BLE from '../utils/BLE';
@@ -9,6 +9,7 @@ const AppContext = createContext({});
 
 interface AppState {
   activeProgram: Program;
+  programs: ProgramsListItem [];
   connectedDevice: Device | null;
 }
 
@@ -27,6 +28,7 @@ export function AppProvider({ children }: PropsWithChildren<{}>) {
     appReducer,
     {
       activeProgram: SynthOPL.newProgram(),
+      programs: [],
       connectedDevice: null
     });
 
@@ -47,6 +49,8 @@ function appReducer(appState: AppState, action: AppAction) {
       return {...appState, connectedDevice: action.payload} as AppState;
     case "setProgram":
       return {...appState, activeProgram: action.payload} as AppState;
+    case "setProgramsList":
+      return {...appState, programs: action.payload} as AppState;
     case "updateOperator":
       return {...appState, activeProgram: patchOperator(appState.activeProgram, appState.connectedDevice as Device, action.payload as OperatorPatch)}
     case "updateOption":
@@ -57,6 +61,8 @@ function appReducer(appState: AppState, action: AppAction) {
       return {...appState, activeProgram: patchNote(appState.activeProgram, appState.connectedDevice as Device, action.payload as NotePatch)}
     case "saveProgram":
       return {...appState, activeProgram: saveProgram(appState.activeProgram, appState.connectedDevice as Device, action.payload as DescriptorPatch)}
+    case "selectProgram":
+      return {...appState, activeProgram: selectProgram(appState.activeProgram, appState.connectedDevice as Device, action.payload as DescriptorPatch)}
     default: {
       console.log('Unknown action: ' + action.type);
       break;
@@ -121,5 +127,11 @@ function saveProgram(program: Program, device: Device, patch: DescriptorPatch) {
   let data = SynthOPL.encodeProgramDescriptor(updatedProgram.descriptor)
   BLE.writeCharacteristic(device, GATT_OPL_CHR_UUID_PROGRAM, data);
   return updatedProgram;
+}
+
+function selectProgram(program: Program, device: Device, patch: DescriptorPatch) {
+  let data = SynthOPL.encodeLoadProgram(patch.updatedValue as ProgramDescriptor);
+  BLE.writeCharacteristic(device, GATT_OPL_CHR_UUID_MSG, data);
+  return program;
 }
 

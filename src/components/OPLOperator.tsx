@@ -36,7 +36,7 @@ type OperatorProps = {
   onChangeFunc: (operatorId: number, patch: object) => void;
 };
 
-const OperatorComponent: FC<OperatorProps> = props => {
+const OPLOperator: FC<OperatorProps> = props => {
   const {operatorId, operator, onChangeFunc} = props;
 
   const onAttackUpdate = (newValue: number) => {onChangeFunc(operatorId, {attack: newValue})};
@@ -152,4 +152,4 @@ const operatorStyle = StyleSheet.create({
   }
 });
 
-export default OperatorComponent;
+export default OPLOperator;

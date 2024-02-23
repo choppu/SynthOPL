@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { FC } from "react";
 import { Operator } from "../types/SynthTypes";
 import AppStyle from "../ui/AppStyle";
-import OperatorComponent from "./OperatorComponent";
+import OPLOperator from "./OPLOperator";
 
 type OperatorsProps = {
   lengthOps: number;
@@ -19,7 +19,7 @@ const Operators: FC<OperatorsProps> = props => {
           return (
             <View key={i}>
               <Text style={AppStyle.operatorLabel}>-OP- {i + 1} </Text>
-              <OperatorComponent operatorId={i} operator={operator} onChangeFunc={onOpChangeFunc}/>
+              <OPLOperator operatorId={i} operator={operator} onChangeFunc={onOpChangeFunc}/>
             </View>
           )
         })}

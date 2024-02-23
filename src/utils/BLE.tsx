@@ -3,7 +3,7 @@ import { VoidCallback } from "../types/BLETypes";
 import DeviceInfo from "react-native-device-info";
 import { PERMISSIONS, requestMultiple } from "react-native-permissions";
 import { BleManager, Device } from "react-native-ble-plx";
-import { SYTH_OPL_UUID } from "./AppConsts";
+import { GATT_OPL_CHR_UUID_PROGRAM, SYTH_OPL_UUID } from "./AppConsts";
 
 const bleManager = new BleManager();
 const base64js = require('base64-js');
@@ -100,6 +100,14 @@ export namespace BLE {
   export async function writeCharacteristic(device: Device, characteristicUUID: string, data: Uint8Array): Promise<void> {
     const base64String = base64js.fromByteArray(data);
     const resp = await device.writeCharacteristicWithoutResponseForService(SYTH_OPL_UUID, characteristicUUID, base64String);
+  };
+
+  export function subscribeToProgramUpdate(device: Device, cb: VoidCallback) : void {
+    device.monitorCharacteristicForService(SYTH_OPL_UUID, GATT_OPL_CHR_UUID_PROGRAM, (err, data) => {
+      if (data) {
+        cb(base64js.toByteArray(data.value));
+      }
+    });
   };
 }
 

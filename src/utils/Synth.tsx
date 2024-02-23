@@ -1,5 +1,5 @@
-import { Drum, Keyboard, Operator, Program, ProgramDescriptor } from "../types/SynthTypes";
-import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, CMD_SAVE_LENGTH, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS } from "../utils/AppConsts";
+import { Drum, Keyboard, Operator, Program, ProgramDescriptor, ProgramsListItem } from "../types/SynthTypes";
+import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_LOAD_LENGTH, CMD_LOAD_PROGRAM, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, CMD_SAVE_LENGTH, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS, programDescriptorLength } from "../utils/AppConsts";
 
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
@@ -146,6 +146,26 @@ export namespace SynthOPL {
     descriptorBytes.set(nameBytes, 2);
 
     return descriptorBytes;
+  }
+
+  export function encodeLoadProgram(descriptor: ProgramDescriptor) : Uint8Array {
+    let descriptorBytes = new Uint8Array(CMD_LOAD_LENGTH);
+
+    descriptorBytes[0] = CMD_LOAD_PROGRAM;
+    descriptorBytes[1] = descriptor.bank;
+    descriptorBytes[2] = descriptor.num;
+
+    return descriptorBytes;
+  }
+
+  export function decodeProgramDescriptor(desc: Uint8Array) : ProgramsListItem {
+    let descriptor = {} as ProgramsListItem;
+
+    descriptor.bank = desc[0];
+    descriptor.num = desc[1];
+    descriptor.name = String.fromCharCode.apply(null, desc.subarray(2, desc.length) as any);
+
+    return descriptor;
   }
 }
 

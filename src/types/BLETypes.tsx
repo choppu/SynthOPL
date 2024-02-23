@@ -1,6 +1,6 @@
 import { Device } from "react-native-ble-plx";
 
-export type VoidCallback = (result: boolean) => void;
+export type VoidCallback = (...params: any) => void;
 
 export interface BluetoothLowEnergyApi {
   requestPermissions(cb: VoidCallback): Promise<void>;

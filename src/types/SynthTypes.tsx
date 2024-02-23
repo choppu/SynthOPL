@@ -48,6 +48,8 @@ export interface ProgramDescriptor {
   num: number;
 }
 
+export interface ProgramsListItem extends ProgramDescriptor { }
+
 export interface OperatorPatch {
   instrumentId: number;
   operatorId: number;

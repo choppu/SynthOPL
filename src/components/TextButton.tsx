@@ -1,6 +1,6 @@
 import {FC } from "react";
 import { DimensionValue, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { mainColor, mainFont, secondaryColor, touchableOpacityActive } from "../utils/StyleConsts";
+import { mainColor, mainFont, mainFontSemiBold, secondaryColor, touchableOpacityActive } from "../utils/StyleConsts";
 
 type TextButtonProps = {
   label: string;
@@ -34,7 +34,7 @@ const buttonStyle = StyleSheet.create({
 
     },
     title: {
-      fontFamily: 'Inconsolata-SemiBold',
+      fontFamily: mainFontSemiBold,
       fontSize: 15,
       textTransform: 'uppercase',
 
