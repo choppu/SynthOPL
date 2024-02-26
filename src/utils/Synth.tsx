@@ -16,6 +16,7 @@ const CMD_CHANNEL_4_LENGTH = 23;
 const CMD_OPERATORS_LENGTH = 5;
 const CMD_SAVE_LENGTH = 14;
 const CMD_LOAD_LENGTH = 3;
+const CMD_NOTE_LENGTH = 4;
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
     operator.tremolo = ((operatorBytes[0] & OP_TREMOLO) == OP_TREMOLO);
@@ -183,12 +184,14 @@ export namespace SynthOPL {
     return descriptor;
   }
 
-  export function encodeNoteCMD(note: number, noteOn: boolean) : Uint8Array {
-    let notePlayBytes = new Uint8Array(CMD_LOAD_LENGTH);
+  export function encodeNoteCMD(note: number, noteOn: boolean, channel: number) : Uint8Array {
+    let notePlayBytes = new Uint8Array(CMD_NOTE_LENGTH);
 
     notePlayBytes[0] = noteOn ? CMD_NOTE_ON : CMD_NOTE_OFF;
     notePlayBytes[1] = note;
     notePlayBytes[2] = 127;
+    notePlayBytes[3] = channel;
+
 
     return notePlayBytes;
   }

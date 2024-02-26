@@ -90,9 +90,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-    width: '95%',
-    marginLeft: '2.5%',
-    marginRight: '2.5%'
+    width: '94.68%',
+    marginLeft: '2.66%',
+    marginRight: '2.66%'
   }
 })
 
