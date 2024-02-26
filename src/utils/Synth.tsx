@@ -1,6 +1,21 @@
 import { Drum, Keyboard, Operator, Program, ProgramDescriptor, ProgramsListItem } from "../types/SynthTypes";
-import { CH_LEFT, CH_RIGHT, CMD_CHANNEL_2_LENGTH, CMD_CHANNEL_4_LENGTH, CMD_CHANNEL_CONFIG, CMD_CONFIG_LENGTH, CMD_DRUM_NOTES, CMD_LOAD_LENGTH, CMD_LOAD_PROGRAM, CMD_NOTES_LENGTH, CMD_OPERATORS_LENGTH, CMD_OPL_CONFIG, CMD_SAVE_LENGTH, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS, programDescriptorLength } from "../utils/AppConsts";
+import { CH_LEFT, CH_RIGHT, DEEP_TREMOLO, DEEP_VIBRATO, FEEDBACK, OP_ATTACK, OP_DECAY, OP_ENV_SCALE, OP_FREQ_MULTIPLICATION, OP_KEY_SCALE, OP_OUTPUT_LEVEL, OP_RELEASE, OP_SUSTAIN, OP_SUSTAINING_VOICE, OP_TREMOLO, OP_VIBRATO, OP_WAVEFORM, SYNTH_TYPE_2OPS, SYNTH_TYPE_4OPS, programDescriptorLength } from "../utils/AppConsts";
 
+const CMD_NOTE_ON = 0x00;
+const CMD_NOTE_OFF = 0x01;
+const CMD_OPL_CONFIG = 0x02;
+const CMD_CHANNEL_CONFIG = 0x03;
+const CMD_LOAD_PROGRAM = 0x04;
+const CMD_DRUM_NOTES = 0x05;
+
+const CMD_CONFIG_LENGTH = 3;
+const CMD_NOTES_LENGTH = 7;
+const CMD_CHANNEL_2_LENGTH = 13;
+const CMD_CHANNEL_4_LENGTH = 23;
+
+const CMD_OPERATORS_LENGTH = 5;
+const CMD_SAVE_LENGTH = 14;
+const CMD_LOAD_LENGTH = 3;
 export namespace SynthOPL {
   function decodeOperator(operatorBytes: Uint8Array, operator: Operator) : void {
     operator.tremolo = ((operatorBytes[0] & OP_TREMOLO) == OP_TREMOLO);
@@ -166,6 +181,16 @@ export namespace SynthOPL {
     descriptor.name = String.fromCharCode.apply(null, desc.subarray(2, desc.length) as any);
 
     return descriptor;
+  }
+
+  export function encodeNoteCMD(note: number, noteOn: boolean) : Uint8Array {
+    let notePlayBytes = new Uint8Array(CMD_LOAD_LENGTH);
+
+    notePlayBytes[0] = noteOn ? CMD_NOTE_ON : CMD_NOTE_OFF;
+    notePlayBytes[1] = note;
+    notePlayBytes[2] = 127;
+
+    return notePlayBytes;
   }
 }
 

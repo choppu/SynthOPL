@@ -1,7 +1,7 @@
 import { Device } from "react-native-ble-plx";
 import { ProgramsListItem } from "../types/SynthTypes";
 import BLE from "./BLE";
-import { GATT_OPL_CHR_UUID_LIST_PRG, programDescriptorLength, programsListLast, programsListFirst } from "./AppConsts";
+import { GATT_OPL_CHR_UUID_LIST_PRG, programDescriptorLength, programsListLast, programsListFirst} from "./AppConsts";
 import SynthOPL from "./Synth";
 
 export namespace Utils {
