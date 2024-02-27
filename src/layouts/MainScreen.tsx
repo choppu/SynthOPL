@@ -7,7 +7,7 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useAppState } from '../hooks/appContext';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Device } from 'react-native-ble-plx';
 import { GATT_OPL_CHR_UUID_LIST_PRG, GATT_OPL_CHR_UUID_PROGRAM } from '../utils/AppConsts';
 import DeviceModal from '../components/DeviceConnectionModal';
@@ -18,7 +18,7 @@ import ProgramsScreenIcon from '..//assets/img/programs_list.svg';
 import SynthScreenIcon from '../assets/img/synth.svg';
 import KeyboardScreenIcon from '../assets/img/midi_keyboard.svg'
 import AddProgramIcon from '../assets/img/add_button.svg';
-import { mainColor, mainFont, tabBarInactiveColor } from '../utils/StyleConsts';
+import { backgroundDark, defaultTextColor, extra, mainColor, mainFont, tabBarInactiveColor } from '../utils/StyleConsts';
 import ProgramsScreen from './ProgramsScreen';
 import VirtualKeyboardScreen from './VirtualKeyboardScreen';
 import BLE from '../utils/BLE';
@@ -34,6 +34,7 @@ const MainScreen = () => {
   const {appState, dispatch} = useAppState();
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [allDevices, setAllDevices] = useState<Device[]>([]);
+  const [isDeviceConnected, setDeviceConnected] = useState<boolean>(false);
 
   const addIc = <AddProgramIcon width={20} height={20} fill={"white"}/>
 
@@ -68,6 +69,7 @@ const MainScreen = () => {
   const disconnectDevice = async () => {
     BLE.disconnectFromDevice(appState.connectedDevice, () => {});
     setSaveBtnDisabled(true);
+    setDeviceConnected(false);
     dispatch({type: "connect", payload: null});
   }
 
@@ -95,15 +97,22 @@ const MainScreen = () => {
         });
 
         setSaveBtnDisabled(false);
+        setDeviceConnected(true);
       }
     }, setConnectedDevice)
   }
 
+  useEffect(() => {
+    if(!isDeviceConnected) {
+      openModal();
+    }
+  }, [isDeviceConnected]);
+
   return (
     <SafeAreaView style={AppStyle.container}>
       <View style={AppStyle.topContentContainer}>
-        <TouchableOpacity onPress={appState.connectedDevice ? disconnectDevice : openModal} style={AppStyle.connectButton}>
-          <Text style={AppStyle.connectButtonText}> {appState.connectedDevice ? 'Disconnect Device' : 'Connect Device'}</Text>
+        <TouchableOpacity onPress={disconnectDevice} style={AppStyle.connectButton}>
+          <Text style={AppStyle.connectButtonText}>Disconnect Device</Text>
         </TouchableOpacity>
         <View style={AppStyle.programButtonsContainer}>
           <View style={AppStyle.buttonContainer}>
@@ -118,8 +127,12 @@ const MainScreen = () => {
       <NavigationContainer>
             <Tab.Navigator initialRouteName="Synth" screenOptions={{
               headerShown: false,
-              tabBarActiveTintColor: mainColor,
-              tabBarInactiveTintColor: tabBarInactiveColor,
+              tabBarStyle: {
+                backgroundColor: mainColor,
+                borderColor: 'transparent'
+              },
+              tabBarActiveTintColor: extra,
+              tabBarInactiveTintColor: defaultTextColor,
               tabBarLabelStyle: {
                 fontFamily: mainFont,
                 paddingBottom: '2%'
@@ -128,17 +141,17 @@ const MainScreen = () => {
             <Tab.Screen
                 name="Synth"
                 children={() => <SynthScreen />}
-                options={{ tabBarIcon:({ focused }) => (<SynthScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
+                options={{ tabBarIcon:({ focused }) => (<SynthScreenIcon width={20} height={20} fill={focused ? extra : defaultTextColor}/>)}}
                 />
             <Tab.Screen
                 name="Programs"
                 component={ProgramsScreen}
-                options={{ tabBarIcon:({ focused }) => (<ProgramsScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
+                options={{ tabBarIcon:({ focused }) => (<ProgramsScreenIcon width={20} height={20} fill={focused ? extra : defaultTextColor}/>)}}
             />
             <Tab.Screen
                 name="Virtual Keyboard"
                 component={VirtualKeyboardScreen}
-                options={{ tabBarIcon:({ focused }) => (<KeyboardScreenIcon width={20} height={20} fill={focused ? mainColor : tabBarInactiveColor}/>)}}
+                options={{ tabBarIcon:({ focused }) => (<KeyboardScreenIcon width={20} height={20} fill={focused ? extra : defaultTextColor}/>)}}
             />
             </Tab.Navigator>
         </NavigationContainer>

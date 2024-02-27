@@ -9,6 +9,7 @@ import { Device } from 'react-native-ble-plx';
 import { GATT_OPL_CHR_UUID_MSG } from '../utils/AppConsts';
 import MidiNumbers from '../utils/MidiNumbers';
 import DrumKey from '../components/DrumKey';
+import AppStyle from '../ui/AppStyle';
 
 
 
@@ -21,7 +22,7 @@ const VirtualKeyboardScreen = () => {
   }
 
   return (
-    <View style={{}}>
+    <View style={AppStyle.screenContainer}>
       <View style={{flexDirection: 'row', height: 130, marginTop: 15}}>
         <DrumKey keyLabel={'Cymbal'} keyVal={43} keyBackground={'violet'} onKeyPressed={handleNotePlay} onKeyReleased={handleNotePlay}></DrumKey>
         <DrumKey keyLabel={'Hi-Hat'} keyVal={44} keyBackground={'orange'} onKeyPressed={handleNotePlay} onKeyReleased={handleNotePlay}></DrumKey>

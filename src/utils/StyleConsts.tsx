@@ -1,12 +1,14 @@
 {/* Style Consts*/}
-export const mainColor = "#04303E";
-export const secondaryColor = "#89A9B1";
 export const selectionColor = "#89A9B177"
 export const mainBackgroundColor = '#F2F2F2';
 export const mainFont = "Inconsolata-Medium";
 export const mainFontSemiBold = 'Inconsolata-SemiBold';
 export const defaultTextColor = "#FFFFFF";
 export const defaultFontSize = 9;
+export const backgroundDark = '#E9E9F0';
+export const mainColor = '#2F576E';
+export const secondaryColor = '#748B9C';
+export const extra = '#E9E9F0';
 
 export const tabBarInactiveColor = "#ABABBB";
 

@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import { useAppState } from '../hooks/appContext';
 import ListItem from '../components/ListItem';
 import { DescriptorPatch, ProgramsListItem } from '../types/SynthTypes';
+import AppStyle from '../ui/AppStyle';
 
 const ProgramsScreen = ({navigation}: any) => {
   const {appState, dispatch} = useAppState();
@@ -13,7 +14,7 @@ const ProgramsScreen = ({navigation}: any) => {
   }
 
   return (
-    <SafeAreaView style={programsListStyle.container}>
+    <SafeAreaView style={AppStyle.screenContainer}>
       <FlatList
         data={appState.programs}
         renderItem={({item}) => <ListItem item={item} isActive={item.name == appState.activeProgram.descriptor.name} onChangeFunc={selectProgram}></ListItem>}
@@ -22,11 +23,5 @@ const ProgramsScreen = ({navigation}: any) => {
     </SafeAreaView>
   );
 }
-
-const programsListStyle = StyleSheet.create({
-  container: {
-
-  }
-});
 
 export default ProgramsScreen;

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { defaultTextColor, mainBackgroundColor, mainColor, mainFont } from "../utils/StyleConsts";
+import { backgroundDark, defaultTextColor, mainBackgroundColor, mainColor, mainFont } from "../utils/StyleConsts";
 
 const AppStyle = StyleSheet.create({
   container: {
@@ -31,12 +31,9 @@ const AppStyle = StyleSheet.create({
     fontSize: 12,
     textTransform: 'uppercase'
   },
-  instrumentContainer: {
-
-  },
   operatorsContainer: {
     flexDirection: 'column',
-    marginBottom: 20,
+    marginBottom: 0,
   },
   operatorLabel: {
     fontFamily: mainFont,
@@ -53,6 +50,10 @@ const AppStyle = StyleSheet.create({
   buttonContainer: {
     marginLeft: 20
   },
+  screenContainer: {
+    backgroundColor: backgroundDark,
+    height: '100%'
+  }
 });
 
 export default AppStyle;

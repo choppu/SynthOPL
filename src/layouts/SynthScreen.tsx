@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import KeyboardScreen from './synth/KeyboardScreen';
 import DrumScreen from './synth/DrumScreen';
 import { DRUMS } from '../utils/AppConsts';
+import { extra } from '../utils/StyleConsts';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -28,6 +29,9 @@ const SynthScreen = () => {
         },
         tabBarIndicatorStyle: {
           backgroundColor: '#04303EBB'
+        },
+        tabBarStyle: {
+          backgroundColor: extra
         }
       }}>
       <Tab.Screen name="Keyboard" component={KeyboardScreen} />

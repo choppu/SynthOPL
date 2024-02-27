@@ -27,7 +27,7 @@ const KeyboardScreen = () => {
 
 
   return (
-    <ScrollView style={AppStyle.instrumentContainer}>
+    <ScrollView style={AppStyle.screenContainer}>
       <View style={{height: 40, flexDirection: 'row'}}>
       <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepTremolo} label={"Deep Tremolo"} onChangeFunc={(newVal: boolean) => updateConfig({deepTremolo: newVal})}></Toggle>
       <Toggle layout={3} toggled={appState.activeProgram.keyboard.deepVibrato} label={"Deep Vibrato"} onChangeFunc={(newVal: boolean) => updateConfig({deepVibrato: newVal})}></Toggle>

@@ -26,7 +26,7 @@ const DrumScreen = ({ route }: any) =>  {
   }
 
   return (
-    <ScrollView style={AppStyle.instrumentContainer}>
+    <ScrollView style={AppStyle.screenContainer}>
       <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newNote: number) => updateNote({note: newNote})}></HorizontalSlider>
       <Channel
       chFeedback={drum.feedback}

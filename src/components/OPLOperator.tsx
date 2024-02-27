@@ -20,7 +20,7 @@ import Toggle from './Toggle';
 import HorizontalSlider from './HorizontalSlider';
 import ADSR from './ADSR';
 
-import { ADSRContainerHeight, defaultFontSize, defaultTextColor, mainColor, mainFont, secondaryColor, tvseContainerHeight, wFormSelectorContainerHeight } from '../utils/StyleConsts';
+import { ADSRContainerHeight, defaultFontSize, defaultTextColor, extra, mainColor, mainFont, secondaryColor, tvseContainerHeight, wFormSelectorContainerHeight } from '../utils/StyleConsts';
 import { defaultSliderMinValue, defaultSliderStep, maxFreqMultiplication, maxKeyScaleLevel, maxOutputLevel } from '../utils/AppConsts';
 
 type TVSE = {
@@ -71,7 +71,7 @@ const OPLOperator: FC<OperatorProps> = props => {
 
   return (
     <View style={operatorStyle.container}>
-      <View style={{height: tvseContainerHeight, flexDirection: 'row'}}>
+      <View style={operatorStyle.tvseContainer}>
         {tvse.map((param: TVSE, i: number) => {
           return <Toggle key={i} layout={tvse.length} toggled={param.value} element={i} label={param.label} labelAbbr={param.shortName} onChangeFunc={param.updateFunc}></Toggle>
         })}
@@ -112,8 +112,11 @@ const operatorStyle = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '100%',
     height: 400,
-    borderBottomColor: mainColor,
-    borderBottomWidth: 1
+  },
+  tvseContainer: {
+    height: tvseContainerHeight,
+    flexDirection: 'row',
+    overflow: 'hidden'
   },
   checkboxContainer: {
     flexDirection: 'row',

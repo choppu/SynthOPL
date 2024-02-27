@@ -51,7 +51,7 @@ export namespace BLE {
     return devices.findIndex(device => nextDevice.id === device.id) > -1;
   }
 
-  function isSynthOPLDevice(device: Device): any {
+  export function isSynthOPLDevice(device: Device): any {
     if(device.serviceUUIDs) {
       return device.serviceUUIDs[0] == SYTH_OPL_UUID;
     }
