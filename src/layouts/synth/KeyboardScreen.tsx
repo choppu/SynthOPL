@@ -1,13 +1,10 @@
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import Toggle from '../../components/Toggle';
 import AppStyle from '../../ui/AppStyle';
 import { useAppState } from '../../hooks/appContext';
 import Channel from '../../components/Channel';
 import Operators from '../../components/Operators';
 import { ConfigPatch, OperatorPatch, OptionPatch } from '../../types/SynthTypes';
-import Selector from '../../components/Selector';
-import { wFormSelectorContainerHeight } from '../../utils/StyleConsts';
-import { synthTypes } from '../../utils/AppConsts';
 import SynthType from '../../components/SynthType';
 
 const KeyboardScreen = () => {

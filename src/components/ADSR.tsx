@@ -18,6 +18,7 @@ const ADSR: FC<ADSRProps> = props => {
       <Text style={operatorStyle.adsrLabel}>{adsrLabel}</Text>
       <View style={{width: verticalSliderContainerWidth, height: verticalSliderContainerHeight}}>
         <Slider
+        onResponderGrant={() => true}
         style={{width: verticalSliderWidth, height: verticalSliderHeight, transform:[{rotate: verticalSliderRotate}, { translateX: verticalSliderOffsetX }, { translateY: verticalSliderOffsetY }]}}
         value={adsrValue}
         minimumValue={defaultSliderMinValue}

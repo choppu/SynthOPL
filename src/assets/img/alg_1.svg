@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="200" height="200" version="1.1" viewBox="0 0 52.917 52.917" xmlns="http://www.w3.org/2000/svg">
+ <g transform="matrix(.88095 0 0 .88095 -25.106 -29.741)">
+  <path d="m55.642 42v-3.701h10.478v21.701h-7.406v-2.3704" fill="none" stroke="#6d748d" stroke-width=".45"/>
+  <rect x="50.945" y="42.996" width="9.3942" height="14.453" fill="#0d2836" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
+  <g fill="none">
+   <rect x="50.945" y="68.694" width="9.3942" height="14.453" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
+   <path d="m55.642 58.392v9.3577" stroke="#000" stroke-width=".7"/>
+   <path d="m55.642 83.146v6.1439" stroke="#000" stroke-width=".7"/>
+  </g>
+  <text x="54.277176" y="51.80582" fill="#ffffff" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="54.277176" y="51.80582" fill="#ffffff" font-size="4.9389px" stroke-width=".26458">1</tspan></text>
+  <text x="54.249447" y="77.517464" fill="#0d2836" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="54.249447" y="77.517464" fill="#0d2836" font-size="4.9389px" stroke-width=".26458">2</tspan></text>
+ </g>
+</svg>
