@@ -1,9 +1,11 @@
 import { Text, View } from "react-native";
 import { FC } from "react";
 import AppStyle from "../ui/AppStyle";
-import { synthTypes } from "../utils/AppConsts";
 import { wFormSelectorContainerHeight } from "../utils/StyleConsts";
 import Selector from "./Selector";
+
+import Alg1 from '../assets/img/alg_1.svg';
+import Alg2 from '../assets/img/alg_2.svg';
 
 type SynthType = {
   operators: number;
@@ -14,10 +16,15 @@ type SynthType = {
 const SynthType: FC<SynthType> = props => {
   const {operators, defaultValue, onSynthTypeChangeFunc} = props;
 
+  const synthTypes = {
+    0: <Alg1 width={60} height={60} />,
+    1: <Alg2 width={60} height={60} />
+  };
+
   return (
-    <View style={{height: 100}}>
-      <Text style={AppStyle.operatorLabel}>--{operators} OPS-- Synth Type</Text>
-      <View style={{height: wFormSelectorContainerHeight, flexDirection: 'row'}}>
+    <View style={{height: 120}}>
+      <Text style={AppStyle.operatorLabel}>-Algorithm-</Text>
+      <View style={{height: 60, flexDirection: 'row'}}>
         {Object.entries(synthTypes).map(([key, val]) => {
           return (
             <Selector
@@ -25,7 +32,7 @@ const SynthType: FC<SynthType> = props => {
               layout={2}
               optKey={key}
               optValue={defaultValue}
-              label={val as string}
+              icon={val}
               onChangeFunc={onSynthTypeChangeFunc}>
             </Selector>
           )

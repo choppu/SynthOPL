@@ -28,6 +28,7 @@ const DrumScreen = ({ route }: any) =>  {
   return (
     <ScrollView style={AppStyle.screenContainer}>
       <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newNote: number) => updateNote({note: newNote})}></HorizontalSlider>
+      <SynthType operators={2} defaultValue={drum.synthType} onSynthTypeChangeFunc={(newVal: number) => updateOption({synthType: newVal})}></SynthType>
       <Channel
       chFeedback={drum.feedback}
       left={drum.chLeft}
@@ -37,7 +38,6 @@ const DrumScreen = ({ route }: any) =>  {
       onFeedbackChangeFunc={(newVal: number) => updateOption({feedback: newVal})}
       >
       </Channel>
-      <SynthType operators={2} defaultValue={drum.synthType} onSynthTypeChangeFunc={(newVal: number) => updateOption({synthType: newVal})}></SynthType>
       <View style={AppStyle.operatorsContainer}>
       <Operators lengthOps={2} operators={drum.operators} onOpChangeFunc={updateOperator}></Operators>
      </View>

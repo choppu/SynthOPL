@@ -1,30 +1,203 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg width="200" height="200" version="1.1" viewBox="0 0 52.917 52.917" xmlns="http://www.w3.org/2000/svg">
- <g transform="matrix(.88095 0 0 .88095 -25.106 -29.741)">
-  <g transform="translate(-.30761 -2.1499)">
-   <g fill="none" stroke="#000" stroke-width=".46245">
-    <path d="m46.513 68.589-0.03799-8.297"/>
-    <path d="m67.393 77.918 0.03799 5.8512h-20.917l-0.03799-5.8512"/>
-    <path d="m67.431 68.064-0.03799-8.297"/>
-   </g>
-   <g transform="matrix(.66064 0 0 .66064 18.925 30.286)" fill="#0d2836">
-    <rect x="37.034" y="57.641" width="9.3942" height="14.453" fill="none" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    <text x="40.385628" y="66.443573" fill="#0d2836" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="40.385628" y="66.443573" fill="#0d2836" font-size="4.9389px" stroke-width=".26458">4</tspan></text>
-   </g>
-   <g transform="matrix(.66064 0 0 .66064 18.925 13.142)" fill="#0d2836">
-    <rect x="37.034" y="57.641" width="9.3942" height="14.453" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    <text x="40.338604" y="66.465279" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="40.338604" y="66.465279" fill="#ffffff" font-size="4.9389px" stroke-width=".26458">3</tspan></text>
-   </g>
-   <g transform="matrix(.66064 0 0 .66064 29.343 .69491)">
-    <rect transform="translate(15.893 44.791)" x="37.034" y="57.641" width="9.3942" height="14.453" fill="none" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    <text transform="translate(15.893 44.791)" x="40.338604" y="66.465279" fill="#0d2836" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="40.338604" y="66.465279" fill="#0d2836" font-size="4.9389px" stroke-width=".26458">2</tspan></text>
-   </g>
-   <path d="m67.367 50.564v-2.445h6.9222v14.337h-4.8927v-1.566" fill="none" stroke="#6d748d" stroke-width=".29729"/>
-   <g transform="matrix(.66064 0 0 .66064 19.53 13.142)">
-    <rect x="67.78" y="57.641" width="9.3942" height="14.453" fill="#0d2836" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    <text x="71.112366" y="66.450813" fill="#ffffff" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="71.112366" y="66.450813" fill="#ffffff" font-size="4.9389px" stroke-width=".26458">1</tspan></text>
-   </g>
+
+<svg
+   width="200"
+   height="200"
+   version="1.1"
+   viewBox="0 0 52.917 52.917"
+   id="svg9"
+   sodipodi:docname="alg_4.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     id="namedview9"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.11"
+     inkscape:cx="100.12165"
+     inkscape:cy="100"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9" />
+  <g
+     transform="matrix(1.3359055,0,0,1.3359055,-49.61879,-56.647842)"
+     id="g9">
+    <g
+       transform="translate(-0.30761,-2.1499)"
+       id="g8">
+      <g
+         fill="none"
+         stroke="#000000"
+         stroke-width="0.46245"
+         id="g3">
+        <path
+           d="M 46.513,68.589 46.47501,60.292"
+           id="path1" />
+        <path
+           d="m 67.393,77.918 0.03799,5.8512 h -20.917 L 46.476,77.918"
+           id="path2" />
+        <path
+           d="M 67.431,68.064 67.39301,59.767"
+           id="path3" />
+      </g>
+      <g
+         transform="matrix(0.66064,0,0,0.66064,18.925,30.286)"
+         fill="#0d2836"
+         id="g4">
+        <rect
+           x="37.034"
+           y="57.640999"
+           width="9.3942003"
+           height="14.453"
+           fill="none"
+           stroke="#0d2836"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           stroke-width="2"
+           style="paint-order:stroke fill markers"
+           id="rect3" />
+        <text
+           x="40.385628"
+           y="66.443573"
+           fill="#0d2836"
+           font-family="Consolas"
+           font-size="4.9389px"
+           letter-spacing="0px"
+           stroke-width="0.26458"
+           word-spacing="0px"
+           style="line-height:1.25"
+           xml:space="preserve"
+           id="text3"><tspan
+             x="40.385628"
+             y="66.443573"
+             fill="#0d2836"
+             font-size="4.9389px"
+             stroke-width="0.26458"
+             id="tspan3">4</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.66064,0,0,0.66064,18.925,13.142)"
+         fill="#0d2836"
+         id="g5">
+        <rect
+           x="37.034"
+           y="57.640999"
+           width="9.3942003"
+           height="14.453"
+           stroke="#0d2836"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           stroke-width="2"
+           style="paint-order:stroke fill markers"
+           id="rect4" />
+        <text
+           x="40.338604"
+           y="66.465279"
+           font-family="Consolas"
+           font-size="4.9389px"
+           letter-spacing="0px"
+           stroke-width="0.26458"
+           word-spacing="0px"
+           style="line-height:1.25"
+           xml:space="preserve"
+           id="text4"><tspan
+             x="40.338604"
+             y="66.465279"
+             fill="#ffffff"
+             font-size="4.9389px"
+             stroke-width="0.26458"
+             id="tspan4">3</tspan></text>
+      </g>
+      <g
+         transform="matrix(0.66064,0,0,0.66064,29.343,0.69491)"
+         id="g6">
+        <rect
+           transform="translate(15.893,44.791)"
+           x="37.034"
+           y="57.640999"
+           width="9.3942003"
+           height="14.453"
+           fill="none"
+           stroke="#0d2836"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           stroke-width="2"
+           style="paint-order:stroke fill markers"
+           id="rect5" />
+        <text
+           transform="translate(15.893,44.791)"
+           x="40.338604"
+           y="66.465279"
+           fill="#0d2836"
+           font-family="Consolas"
+           font-size="4.9389px"
+           letter-spacing="0px"
+           stroke-width="0.26458"
+           word-spacing="0px"
+           style="line-height:1.25"
+           xml:space="preserve"
+           id="text5"><tspan
+             x="40.338604"
+             y="66.465279"
+             fill="#0d2836"
+             font-size="4.9389px"
+             stroke-width="0.26458"
+             id="tspan5">2</tspan></text>
+      </g>
+      <path
+         d="m 67.367,50.564 v -2.445 h 6.9222 V 62.456 H 69.3965 V 60.89"
+         fill="none"
+         stroke="#6d748d"
+         stroke-width="0.29729"
+         id="path6" />
+      <g
+         transform="matrix(0.66064,0,0,0.66064,19.53,13.142)"
+         id="g7">
+        <rect
+           x="67.779999"
+           y="57.640999"
+           width="9.3942003"
+           height="14.453"
+           fill="#0d2836"
+           stroke="#0d2836"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           stroke-width="2"
+           style="paint-order:stroke fill markers"
+           id="rect6" />
+        <text
+           x="71.112366"
+           y="66.450813"
+           fill="#ffffff"
+           font-family="Consolas"
+           font-size="4.9389px"
+           letter-spacing="0px"
+           stroke-width="0.26458"
+           word-spacing="0px"
+           style="line-height:1.25"
+           xml:space="preserve"
+           id="text6"><tspan
+             x="71.112366"
+             y="66.450813"
+             fill="#ffffff"
+             font-size="4.9389px"
+             stroke-width="0.26458"
+             id="tspan6">1</tspan></text>
+      </g>
+    </g>
   </g>
- </g>
 </svg>

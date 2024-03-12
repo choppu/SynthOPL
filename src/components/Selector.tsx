@@ -6,7 +6,7 @@ type SelectorProps = {
   layout: number;
   optKey: string;
   optValue: number;
-  label: string;
+  label?: string;
   icon?:  string | React.JSX.Element | undefined;
   onChangeFunc: (newValue: number) => void
 };
@@ -18,8 +18,8 @@ const Selector: FC<SelectorProps> = props => {
   return (
     <View style={{width: containerWidth as DimensionValue}}>
       <TouchableOpacity style={optValue == Number(optKey) ? selectorStyle.selected : selectorStyle.unselected} key={optKey} activeOpacity={touchableOpacityActive} onPress={() => onChangeFunc(Number(optKey))}>
-        {icon}
-        <Text style={selectorStyle.label}>{label}</Text>
+        {icon ? icon: null}
+        {label ? <Text style={selectorStyle.label}>{label}</Text> : null}
       </TouchableOpacity>
     </View>
   )};

@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg width="200" height="200" version="1.1" viewBox="0 0 52.917 52.917" xmlns="http://www.w3.org/2000/svg">
- <g transform="matrix(.88095 0 0 .88095 -25.106 -29.741)">
-  <g transform="translate(4.9514e-6 -2.2341)">
-   <g transform="translate(-2.8564)">
-    <g fill="none">
-     <path d="m72.477 72.094 0.09346 6.8657-27.926 0.1536-0.0575-7.0193" stroke="#000" stroke-width=".7"/>
-     <path d="m72.409 56.645v-3.701h10.478v21.701h-7.406v-2.3704" stroke="#6d748d" stroke-width=".45"/>
-     <rect x="39.891" y="57.641" width="9.3942" height="14.453" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    </g>
-    <text x="43.195053" y="66.465279" fill="#0d2836" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="43.195053" y="66.465279" fill="#0d2836" font-size="4.9389px" stroke-width=".26458">2</tspan></text>
-    <rect x="67.78" y="57.641" width="9.3942" height="14.453" fill="none" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="paint-order:stroke fill markers"/>
-    <text x="71.112366" y="66.450813" fill="#0d2836" font-family="Consolas" font-size="4.9389px" letter-spacing="0px" stroke-width=".26458" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="71.112366" y="66.450813" fill="#0d2836" font-size="4.9389px" stroke-width=".26458">1</tspan></text>
-   </g>
+ <g>
+  <g fill="none">
+   <path d="m37.285 31.802 0.08233 6.0483-24.601 0.13531-0.05065-6.1837" stroke="#0d2836" stroke-width=".61666"/>
+   <path d="m37.225 18.192v-3.2604h9.2306v19.117h-6.5243v-2.0882" stroke="#6d748d" stroke-width=".39643"/>
+   <rect x="8.578" y="19.07" width="8.2758" height="12.732" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7619" style="paint-order:stroke fill markers"/>
   </g>
+  <text x="11.48868" y="26.843456" fill="#0d2836" font-family="Consolas" font-size="4.3509px" letter-spacing="0px" stroke-width=".23308" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="11.48868" y="26.843456" fill="#0d2836" font-size="4.3509px" stroke-width=".23308">2</tspan></text>
+  <rect x="33.147" y="19.07" width="8.2758" height="12.732" fill="none" stroke="#0d2836" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7619" style="paint-order:stroke fill markers"/>
+  <text x="36.082436" y="26.830713" fill="#0d2836" font-family="Consolas" font-size="4.3509px" letter-spacing="0px" stroke-width=".23308" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="36.082436" y="26.830713" fill="#0d2836" font-size="4.3509px" stroke-width=".23308">1</tspan></text>
  </g>
 </svg>

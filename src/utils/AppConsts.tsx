@@ -49,11 +49,6 @@ export const DRUMS = {
   "Extra": 5
 }
 
-{/* Synth Types Consts */}
-export const synthTypes = {
-  0: "FM",
-  1: "AM"
-};
 
 {/* Programs List Consts */}
 export const programsListFirst = 0x40;

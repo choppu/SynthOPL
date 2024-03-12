@@ -7,7 +7,7 @@ export const defaultTextColor = "#FFFFFF";
 export const defaultFontSize = 9;
 export const backgroundDark = '#E9E9F0';
 export const mainColor = '#2F576E';
-export const secondaryColor = '#748B9C';
+export const secondaryColor = '#748B9CBB';
 export const extra = '#E9E9F0';
 
 export const tabBarInactiveColor = "#ABABBB";

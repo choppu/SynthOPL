@@ -18,7 +18,7 @@ const Channel: FC<ChannelProps> = props => {
 
   return (
     <View>
-      <View style={{height: 40}}>
+      <View style={{height: 50}}>
         <HorizontalSlider label='Feedback' value={chFeedback} minValue={defaultSliderMinValue} maxValue={maxFeedbackValue} step={defaultSliderStep} onChangeFunc={(newVal: number) => onFeedbackChangeFunc(newVal)}></HorizontalSlider>
       </View>
       <View style={{height: 40, flexDirection: 'row'}}>

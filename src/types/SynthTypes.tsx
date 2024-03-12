@@ -50,6 +50,13 @@ export interface ProgramDescriptor {
 
 export interface ProgramsListItem extends ProgramDescriptor { }
 
+export interface synthAlgorithm {
+  enable4Ops: boolean;
+  synth_2Ops: number;
+  synth_4Ops: number;
+  icon: string | React.JSX.Element | undefined;
+}
+
 export interface OperatorPatch {
   instrumentId: number;
   operatorId: number;
