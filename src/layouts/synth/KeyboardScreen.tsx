@@ -14,7 +14,6 @@ import Alg4 from '../../assets/img/alg_4.svg';
 import Alg5 from '../../assets/img/alg_5.svg';
 import Alg6 from '../../assets/img/alg_6.svg';
 import Selector from '../../components/Selector';
-import { useEffect, useState } from 'react';
 
 const KeyboardScreen = () => {
   const {appState, dispatch} = useAppState();
@@ -23,8 +22,8 @@ const KeyboardScreen = () => {
     {enable4Ops: false, synth_2Ops: 0, synth_4Ops: 0, icon: <Alg1 width={60} height={60} />} as synthAlgorithm,
     {enable4Ops: false, synth_2Ops: 1, synth_4Ops: 0, icon: <Alg2 width={60} height={60} />} as synthAlgorithm,
     {enable4Ops: true, synth_2Ops: 0, synth_4Ops: 0, icon: <Alg3 width={60} height={60} />} as synthAlgorithm,
-    {enable4Ops: true, synth_2Ops: 1, synth_4Ops: 0, icon: <Alg4 width={60} height={60} />} as synthAlgorithm,
-    {enable4Ops: true, synth_2Ops: 0, synth_4Ops: 1, icon: <Alg5 width={60} height={60} />} as synthAlgorithm,
+    {enable4Ops: true, synth_2Ops: 0, synth_4Ops: 1, icon: <Alg4 width={60} height={60} />} as synthAlgorithm,
+    {enable4Ops: true, synth_2Ops: 1, synth_4Ops: 0, icon: <Alg5 width={60} height={60} />} as synthAlgorithm,
     {enable4Ops: true, synth_2Ops: 1, synth_4Ops: 1, icon: <Alg6 width={60} height={60} />} as synthAlgorithm
   ]
 
