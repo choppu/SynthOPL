@@ -58,7 +58,7 @@ const DeviceModal: FC<DeviceModalProps> = props => {
       <SafeAreaView style={modalStyle.modalTitle}>
         <Text style={modalStyle.modalTitleText}> Tap on a device to connect</Text>
         <View style={modalStyle.iconContainer}>
-          <BLEConnect width={150} height={150} />
+          <BLEConnect width={145} height={145} />
         </View>
         <FlatList contentContainerStyle={modalStyle.modalFlatlistContiner} data={devices} renderItem={renderDeviceModalListItem} />
       </SafeAreaView>
