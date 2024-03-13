@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg id="Flat" width="778.35" height="778.35" fill="#000000" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)" sodipodi:docname="ble_connect.svg" version="1.1" viewBox="0 0 249.07 249.07" xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd">
+ <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" inkscape:current-layer="g4" inkscape:cx="388.70154" inkscape:cy="389.17499" inkscape:deskcolor="#d1d1d1" inkscape:pagecheckerboard="0" inkscape:pageopacity="0.0" inkscape:showpageshadow="2" inkscape:window-height="1018" inkscape:window-maximized="1" inkscape:window-width="1920" inkscape:window-x="-6" inkscape:window-y="-6" inkscape:zoom="1.0560802" pagecolor="#ffffff"/>
+ <defs>
+  <linearGradient id="linearGradient3" x1="5.3401" x2="250.66" y1="128" y2="128" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#2f576e" offset=".33796"/>
+   <stop stop-color="#748b9c" stop-opacity=".70515" offset="1"/>
+  </linearGradient>
+  <filter id="filter6" x="-.081421" y="-.057325" width="1.1628" height="1.1147" color-interpolation-filters="sRGB" inkscape:label="Blur">
+   <feGaussianBlur result="blur" stdDeviation="8.29138 5.83764"/>
+  </filter>
+  <filter id="filter35" x="-.018162" y="-.018162" width="1.0363" height="1.0363" color-interpolation-filters="sRGB" inkscape:label="Blur">
+   <feGaussianBlur result="blur" stdDeviation="1.54359 1.54359"/>
+  </filter>
+  <filter id="filter37" x="-.054641" y="-.054641" width="1.1093" height="1.1093" color-interpolation-filters="sRGB" inkscape:label="Blur Double" inkscape:menu="Blurs" inkscape:menu-tooltip="Overlays two copies with different blur amounts and modifiable blend and composite">
+   <feGaussianBlur result="fbSourceGraphic" stdDeviation="5"/>
+   <feGaussianBlur in="SourceGraphic" result="result1" stdDeviation="0.01"/>
+   <feComposite in="fbSourceGraphic" in2="result1" k2="0.5" k3="0.5" operator="arithmetic" result="result2"/>
+   <feBlend in2="fbSourceGraphic" result="result3"/>
+  </filter>
+ </defs>
+ <g transform="translate(-3.4647 -3.4647)">
+  <circle cx="128" cy="128" r="124.54" fill="#373737" style="paint-order:stroke fill markers"/>
+  <circle cx="128" cy="128" r="122.2" fill="url(#linearGradient3)" filter="url(#filter6)" style="mix-blend-mode:normal;paint-order:stroke fill markers"/>
+  <circle cx="128" cy="128" r="113.79" fill="#373737" fill-opacity=".54875" filter="url(#filter35)" stroke="#fffeff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".85744" style="paint-order:stroke fill markers"/>
+  <path d="m180 165.34-49.78-37.335 49.78-37.335a3.3337 3.3337 0 0 0 0-5.334l-53.336-40.002a3.3333 3.3333 0 0 0-5.3336 2.667v73.337l-48.003-36.002a3.3336 3.3336 0 1 0-4.0001 5.334l49.78 37.335-49.78 37.335a3.3336 3.3336 0 0 0 4.0001 5.334l48.003-36.002v73.338a3.3336 3.3336 0 0 0 5.3336 2.667l53.336-40.002a3.3337 3.3337 0 0 0 0-5.334zm-52.003-110.67 44.447 33.335-44.447 33.335zm0 146.68v-66.671l44.447 33.335zm66.671-73.338a6.6671 6.6671 0 1 1-6.6671-6.6671 6.6747 6.6747 0 0 1 6.6671 6.6671zm-126.67 6.6671a6.6671 6.6671 0 1 1 6.6671-6.6671 6.6747 6.6747 0 0 1-6.6671 6.6671z" fill="#fff" stroke-width=".83338"/>
+  <circle cx="128" cy="128" r="110.03" fill="#fff" fill-opacity=".54875" filter="url(#filter37)" opacity=".236" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>

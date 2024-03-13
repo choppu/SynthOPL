@@ -7,6 +7,7 @@ import Channel from '../../components/Channel';
 import Operators from '../../components/Operators';
 import { NotePatch, OperatorPatch, OptionPatch } from '../../types/SynthTypes';
 import SynthType from '../../components/SynthType';
+import MidiNumbers from '../../utils/MidiNumbers';
 
 const DrumScreen = ({ route }: any) =>  {
   const id = route.params.id as number;
@@ -27,7 +28,7 @@ const DrumScreen = ({ route }: any) =>  {
 
   return (
     <ScrollView style={AppStyle.screenContainer}>
-      <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newNote: number) => updateNote({note: newNote})}></HorizontalSlider>
+      <HorizontalSlider label='Note' value={drum.note} minValue={defaultSliderMinValue} textVal={MidiNumbers.midiToNoteName(drum.note)} maxValue={maxNoteValue} step={defaultSliderStep} onChangeFunc={(newNote: number) => updateNote({note: newNote})}></HorizontalSlider>
       <SynthType operators={2} defaultValue={drum.synthType} onSynthTypeChangeFunc={(newVal: number) => updateOption({synthType: newVal})}></SynthType>
       <Channel
       chFeedback={drum.feedback}

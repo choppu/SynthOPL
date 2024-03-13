@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="131.15694mm"
+   height="66.481735mm"
+   viewBox="0 0 131.15693 66.481743"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="slider_thumb.svg"
+   inkscape:export-filename="slider_thumb_vertical.png"
+   inkscape:export-xdpi="7.9745808"
+   inkscape:export-ydpi="7.9745808"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.73228114"
+     inkscape:cx="448.5982"
+     inkscape:cy="423.33467"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g12" />
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient6"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#2f576e;stop-opacity:0.86636639;"
+         offset="0"
+         id="stop6" />
+      <stop
+         style="stop-color:#2f576e;stop-opacity:0.15165165;"
+         offset="1"
+         id="stop7" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#2f576e;stop-opacity:1;"
+         offset="0.07711139"
+         id="stop4" />
+      <stop
+         style="stop-color:#6189a0;stop-opacity:1;"
+         offset="1"
+         id="stop5" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="fillet_chamfer"
+       id="path-effect1"
+       is_visible="true"
+       lpeversion="1"
+       nodesatellites_param="F,0,0,1,0,0,0,12 @ F,0,0,1,0,0,0,12 @ F,0,0,1,0,0,0,12 @ F,0,0,1,0,0,0,12"
+       radius="70"
+       unit="px"
+       method="auto"
+       mode="F"
+       chamfer_steps="12"
+       flexible="false"
+       use_knot_distance="true"
+       apply_no_radius="true"
+       apply_with_radius="true"
+       only_selected="false"
+       hide_knots="false" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4"
+       id="linearGradient5"
+       x1="31.11132"
+       y1="148.5"
+       x2="178.88869"
+       y2="148.5"
+       gradientUnits="userSpaceOnUse"
+       spreadMethod="reflect" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6"
+       id="linearGradient7"
+       x1="44.099319"
+       y1="161.76855"
+       x2="165.90068"
+       y2="161.76855"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0327151,0,0,0.75122658,-3.43509,46.239995)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6"
+       id="linearGradient8"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0327151,0,0,0.75122658,-3.4350913,13.934019)"
+       x1="44.099319"
+       y1="161.76855"
+       x2="165.90068"
+       y2="161.76855" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient6"
+       id="linearGradient9"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0327151,0,0,0.75122658,-3.4350883,30.086995)"
+       x1="44.099319"
+       y1="161.76855"
+       x2="165.90068"
+       y2="161.76855" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(13.510936,-36.492701)">
+    <g
+       id="g10"
+       transform="matrix(0,1,-1.5491803,0,328.2668,46.93248)">
+      <g
+         id="g11">
+        <g
+           id="g12"
+           transform="matrix(0.61605583,0,0,1.7122642,6.8985923,-77.268665)">
+          <path
+             style="opacity:1;fill:url(#linearGradient5);stroke-width:0.79926;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+             id="rect1"
+             width="147.77736"
+             height="37.215328"
+             x="31.11132"
+             y="129.89233"
+             inkscape:path-effect="#path-effect1"
+             sodipodi:type="rect"
+             d="m 31.11132,129.89233 h 147.77736 v 37.21533 H 31.11132 Z"
+             transform="matrix(0.7302547,0,0,1.3286074,-50.863344,-48.047849)" />
+          <g
+             id="g9"
+             transform="matrix(0.76683337,0,0,0.80178755,-54.704099,30.209768)">
+            <g
+               id="g13"
+               transform="translate(-3.3986939e-7,-3.1428506)">
+              <rect
+                 style="opacity:0.630491;fill:#748b9c;fill-opacity:1;stroke:url(#linearGradient7);stroke-width:0.670467;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+                 id="rect2-9"
+                 width="125"
+                 height="3.8"
+                 x="42.5"
+                 y="165.86482" />
+              <rect
+                 style="opacity:0.630491;fill:#748b9c;fill-opacity:1;stroke:url(#linearGradient8);stroke-width:0.670467;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+                 id="rect2-9-7"
+                 width="125"
+                 height="3.8"
+                 x="42.5"
+                 y="133.55884" />
+              <rect
+                 style="opacity:0.630491;fill:#748b9c;fill-opacity:1;stroke:url(#linearGradient9);stroke-width:0.670467;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+                 id="rect2-9-1"
+                 width="125"
+                 height="3.8"
+                 x="42.5"
+                 y="149.71182" />
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

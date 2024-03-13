@@ -97,11 +97,13 @@ const OPLOperator: FC<OperatorProps> = props => {
             );
        })}
       </View>
-      <View>
+      <View style={{marginTop: 20}}>
+        <View>
         <HorizontalSlider label='Output Level' value={operator.outputLevel} minValue={defaultSliderMinValue} maxValue={maxOutputLevel} step={defaultSliderStep} onChangeFunc={updateOutputLevel}></HorizontalSlider>
         <HorizontalSlider label='Frequency Multiplication' value={operator.frequencyMultiplication} minValue={defaultSliderMinValue} maxValue={maxFreqMultiplication} step={defaultSliderStep} onChangeFunc={updateFrequencyMultiplication}></HorizontalSlider>
         <HorizontalSlider label='Key Scale Level' value={operator.keyScaleLevel} minValue={defaultSliderMinValue} maxValue={maxKeyScaleLevel} step={defaultSliderStep} onChangeFunc={updateKeyScale}></HorizontalSlider>
-      </View>
+        </View>
+        </View>
     </View>
   );
 };
@@ -111,7 +113,7 @@ const operatorStyle = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '100%',
-    height: 400,
+    height: 440,
   },
   tvseContainer: {
     height: tvseContainerHeight,
